@@ -1,31 +1,64 @@
+#pragma once
 #include <iostream> // For debug purposes
 #include <tuple>
-#include <vector>
+#include <map>
 #include <string>
 #include <ctime>
 
-std::vector<std::tuple<int, std::string, std::string, bool>> members_table;  // on stock id, nom, prénom, state(banni,préivilégié)
-std::vector<std::tuple<std::string, int, int, float, std::time_t>> books_table; // on stock titre, state(empreinté,achat,perdu,dispo),prix,date de retour en cas d'empreint
 
-struct members
+struct MemberInfo //on stock toute les informations relatives à un membre
 {
-std::tuple<int, std::string, std::string, bool> membres_tuple;
-}
+    std::string nom;    //nom de famille
+    std::string prenom; // prénom
+    bool state;         // état (banni, neutre)
+};
+struct BookInfo // on stock toute les informations relatives à un livre
+{
+    std::string title;          //titre du livre
+    int state;                  //état du livre (empreinté, perdu, en achat, dispo)
+    int id_member;              //id du membre qui à empreinté le livre
+    float price;                //prix théorique du livre si il doit y avoir un remboursement
+    std::time_t return_date;    //Date où le livre doit être returner à la bibliothèque
+};
+struct Members //contien une table de tous les membres ainsi que des fonctions pour edit/lire celle-ci
+{
+    static std::map<int, MemberInfo> table;   // table de tout les membres
+    void insert()
+    {
+        MemberInfo member;
+        table.insert();
+    }
+    void edit()
+    {
+
+    }
+    void disp()
+    {
+        
+    }
+};
+struct Books //contien une table de tous les livres ainsi que des fonctions pour edit/lire celle-ci
+{
+    static std::map<int, BookInfo> table;    // table de tout les livres
+    void insert()
+    {
+        
+    }
+    void edit()
+    {
+
+    }
+    void disp()
+    {
+
+    }
+};
 
 
 
 
-
-
-
-
-
-
-
-
-int main(int, char**){
-
+int main(int, char**)
+{
   /* Je mettrais mon code ici */
-
   return 0;
 }
