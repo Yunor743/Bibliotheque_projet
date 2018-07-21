@@ -1,9 +1,6 @@
-#pragma once
+#include "headers/books.hpp"
+#include "headers/members.hpp"
 #include <iostream> // For debug purposes
-#include <tuple>
-#include <map>
-#include <string>
-#include <ctime>
 
 
 struct MemberInfo //on stock toute les informations relatives à un membre
@@ -22,11 +19,15 @@ struct BookInfo // on stock toute les informations relatives à un livre
 };
 struct Members //contien une table de tous les membres ainsi que des fonctions pour edit/lire celle-ci
 {
-    static std::map<int, MemberInfo> table;   // table de tout les membres
-    void insert()
+    private:
+    std::mt19937 gen;
+    int key = gen();
+
+  public:
+    std::unordered_map<int, MemberInfo> table;   // table de tout les membres
+    void insert(std::string nom, std::string prenom, bool state = 0)
     {
-        MemberInfo member;
-        table.insert();
+        table.emplace(key, {nom, prenom, state});
     }
     void edit()
     {
@@ -39,7 +40,7 @@ struct Members //contien une table de tous les membres ainsi que des fonctions p
 };
 struct Books //contien une table de tous les livres ainsi que des fonctions pour edit/lire celle-ci
 {
-    static std::map<int, BookInfo> table;    // table de tout les livres
+    std::unordered_map<int, BookInfo> table;    // table de tout les livres
     void insert()
     {
         
