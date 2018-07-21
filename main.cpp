@@ -21,7 +21,6 @@ struct Members //contien une table de tous les membres ainsi que des fonctions p
 {
     private:
     std::mt19937 gen;
-
     public:
     std::unordered_map<unsigned int, MemberInfo> table;   // table de tout les membres
     void insert(std::string nom, std::string prenom, bool state = 0)
@@ -51,6 +50,6 @@ struct Books //contien une table de tous les livres ainsi que des fonctions pour
 
 int main(int, char**)
 {
-  /* Je mettrais mon code ici */
-  return 0;
+    Members mesmembres;
+    return 0;
 }
