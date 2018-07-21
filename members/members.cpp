@@ -1,5 +1,5 @@
 #include <chrono>
-#include "../headers/members.hpp"
+#include "../members.hpp"
 
 void Members::insert(std::string nom, std::string prenom, MemberState state = MemberState::NORMAL) //cette fonction membre permet d'insérer une nouvelle ligne dans la table
 {
@@ -11,7 +11,7 @@ void Members::insert(std::string nom, std::string prenom, MemberState state = Me
   table.emplace(key, MemberInfo{nom, prenom, std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())}); //
 }
 
-void Members::disp()
+void Members::disp() const
 {
 
 }
