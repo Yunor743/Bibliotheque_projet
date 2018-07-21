@@ -21,13 +21,12 @@ struct Members //contien une table de tous les membres ainsi que des fonctions p
 {
     private:
     std::mt19937 gen;
-    int key = gen();
 
-  public:
-    std::unordered_map<int, MemberInfo> table;   // table de tout les membres
+    public:
+    std::unordered_map<unsigned int, MemberInfo> table;   // table de tout les membres
     void insert(std::string nom, std::string prenom, bool state = 0)
     {
-        table.emplace(key, {nom, prenom, state});
+        table.emplace(gen(), {nom, prenom, state});
     }
     void edit()
     {
