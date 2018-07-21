@@ -28,10 +28,6 @@ struct Members //contien une table de tous les membres ainsi que des fonctions p
     {
         table.emplace(gen(), MemberInfo{nom, prenom, state});
     }
-    void edit()
-    {
-
-    }
     void disp()
     {
 
@@ -41,10 +37,6 @@ struct Books //contien une table de tous les livres ainsi que des fonctions pour
 {
     std::unordered_map<int, BookInfo> table;    // table de tout les livres
     void insert()
-    {
-
-    }
-    void edit()
     {
 
     }
