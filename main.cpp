@@ -28,10 +28,6 @@ struct Members //contien une table de tous les membres ainsi que des fonctions p
     {
         table.emplace(gen(), {nom, prenom, state});
     }
-    void edit()
-    {
-
-    }
     void disp()
     {
         
@@ -43,10 +39,6 @@ struct Books //contien une table de tous les livres ainsi que des fonctions pour
     void insert()
     {
         
-    }
-    void edit()
-    {
-
     }
     void disp()
     {
