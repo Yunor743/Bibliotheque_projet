@@ -1,15 +1,13 @@
-<<<<<<< HEAD
+
 /*include temporaire pour debug intelliSense*/
 #include "header/members.hpp"
 
 
 struct MemberInfo //on stock toute les informations relatives à un membre
-=======
 #include <chrono>
 #include "../members.hpp"
 
 void Members::insert(std::string nom, std::string prenom, MemberState state = MemberState::NORMAL) //cette fonction membre permet d'insérer une nouvelle ligne dans la table
->>>>>>> cfe4b39232fd5de3c5f3e288dd5987008fd51598
 {
   unsigned int key; //on va générer aléatoirement la clé avec notre générateur gen
   do {
@@ -22,7 +20,7 @@ void Members::insert(std::string nom, std::string prenom, MemberState state = Me
 void Members::disp() const
 {
 
-<<<<<<< HEAD
+
     }
 };
 
