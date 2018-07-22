@@ -159,10 +159,7 @@ void Members::disp() const
 
 /*main.cpp*/
 #include <iostream> // For debug purposes
-/* uncomment this when we parse this code in the others files
-#include "header/books.hpp"
-#include "header/members.hpp"
-*/
+
 
 int main(int, char**)
 {
