@@ -1,3 +1,7 @@
+/*include temporaire pour debug intelliSense*/
+#include "header/members.hpp"
+
+
 struct MemberInfo //on stock toute les informations relatives à un membre
 {
     std::string nom;    //nom de famille
@@ -25,3 +29,9 @@ struct Members //contien une table de tous les membres ainsi que des fonctions p
 
     }
 };
+
+int main()
+{
+    Members mes_membres;
+    MemberInfo myactor = mes_membres.table.find(13)
+}

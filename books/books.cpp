@@ -1,3 +1,6 @@
+/*include temporaire pour debug intelliSense*/
+#include "header/books.hpp"
+
 struct BookInfo // on stock toute les informations relatives à un livre
 {
     std::string title;          //titre du livre
