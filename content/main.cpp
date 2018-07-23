@@ -30,7 +30,7 @@ struct Books
     std::mt19937 generator; 
   public:                                         //On retourne au public, les éléments seront à nouveau appelables en dehors de l'instance de la classe
     std::unordered_map<uint, BookInfo> table;     // table de tout les livres
-    void insert();                                //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
+    void insert(std::string title, BookState state, uint id_borrower, float price, std::time_t return_date);                                //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
     void disp() const;
 };
 
@@ -58,8 +58,9 @@ struct Books
 //#include <string>
 //#include <ctime>
 //#include <random>
+#include <chrono>
 
-using uint = unsigned int;  //on poura utiliser uint pour représenter un unsigned int
+//using uint = unsigned int;  //on poura utiliser uint pour représenter un unsigned int
 
 enum class MemberState : bool // état du membre (banni, neutre)
 {
@@ -101,9 +102,15 @@ struct Members //contient une table de tous les membres ainsi que des fonctions 
 /*books.cpp*/
 
 
-void Books::insert()
+void Books::insert(std::string title, BookState state = BookState::AVAILABLE, uint id_borrower, float price, std::time_t return_date)
 {
-
+  uint key;
+  do
+  {
+    key = generator();
+  } 
+  while (table.find(key) == table.end());
+  table.emplace(key, BookInfo{title, state, id_borrower, price, return_date});
 }
 void Books::disp() const
 {
@@ -125,11 +132,10 @@ void Books::disp() const
 
 
 /*members.cpp*/
-#include <chrono>
 
 void Members::insert(std::string nom, std::string prenom, MemberState state = MemberState::NORMAL) //on défini la fonction membre qui permet d'insérer une nouvelle ligne dans la table
 {
-  unsigned int key; //on va générer aléatoirement la clé avec notre générateur generator
+  uint key; //on va générer aléatoirement la clé avec notre générateur generator
   do
   {
     key = generator();
