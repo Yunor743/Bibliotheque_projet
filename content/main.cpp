@@ -98,10 +98,10 @@ struct Members //contient une table de tous les membres ainsi que des fonctions 
 
 //using uint = unsigned int;  //on poura utiliser uint pour représenter un unsigned int
 
-struct system
+struct System
 {
   void borrow(Books book_inst, uint book_id, uint member_id);
-
+  void return_book();
 };
 
 
@@ -180,11 +180,25 @@ void Members::disp() const
 
 /*system.cpp*/
 
-void system::borrow(Books book_inst, uint book_id, uint member_id)
+void System::borrow(Books book_inst, uint book_id, uint member_id) //function permettant l'emprunt d'un livre
 {
-  BookInfo one_bookinfo = book_inst.table.find(book_id);
-  one_bookinfo.state = BookState::BORROWED;
-  one_bookinfo.id_member = member_id;
+  if(book_inst.table.find(book_id) != book_inst.table.end()) //on s'assure que le livre demandé existe
+  {
+    BookInfo one_bookinfo = book_inst.table[book_id]; //on instancie toute les informations sur ce livre dans one_bookinfo
+    if(one_bookinfo.state == BookState::AVAILABLE) //on s'assure que le livre est disponible
+    {
+      one_bookinfo.state = BookState::BORROWED;
+      one_bookinfo.id_member = member_id;
+    }
+    else
+    {
+      //Erreur: le livre n'est actuellement pas disponible
+    }
+  }
+  else
+  {
+    //Erreur: le livre à empreinter n'éxiste pas
+  }
 }
 
 
