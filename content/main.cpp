@@ -42,7 +42,7 @@ std::time_t parse_days_in_date(uint nb_of_days, std::time_t start_date);
 #include <ctime>
 #include <random>
 
-using uint = unsigned int; //on pourra utiliser uint pour représenter un unsigned int
+//using uint = unsigned int; //on pourra utiliser uint pour représenter un unsigned int
 
 enum class BookState : int //état du livre (empreinté, perdu, en achat, dispo)
 {
