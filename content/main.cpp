@@ -70,7 +70,7 @@ struct Books
   public:                                         //On retourne au public, les éléments seront à nouveau appelables en dehors de l'instance de la classe
     std::unordered_map<uint, BookInfo> table;     // table de tout les livres
     void save(std::string path);
-    void load();
+    void load(const std::string file_name, char delimiter, char end_line);
     void insert(std::string title, float price, BookState state, uint id_borrower, std::time_t return_date);                                //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
     void delOne(uint id);
     void disp() const;
@@ -261,25 +261,68 @@ std::string interpretBookState(uint state)
 
 
 /*books.cpp*/
-void Books::save(std::string path = "save/books.txt") //On défini la fonction permetant de sauvegarder notre table de Books dans un fichier
+void Books::save(const std::string path = "save/books.txt") //On défini la fonction permetant de sauvegarder notre table de Books dans un fichier
 {
   std::ofstream save_books_file;    //On instancie le flux
   save_books_file.open (path);      //On ouvre le fichier au chemin spécifique
   for (auto iter = table.begin(); iter != table.end(); ++iter)    //On inscrit les valeurs de toute les iterations jusqu'à arriver à la dernière
   {
-    save_books_file << "key: " << iter->first << " / ";
-    save_books_file << "titre: " << iter->second.title << " / ";
-    save_books_file << "prix: " << iter->second.price << " / ";
-    save_books_file << "etat: " << static_cast<std::underlying_type<BookState>::type>(iter->second.state) << " / ";
-    save_books_file << "empreinteur: " << iter->second.id_borrower << " / ";
-    save_books_file << "date_retour: " << iter->second.return_date;
+    save_books_file << iter->first << "/";
+    save_books_file << iter->second.title << "/";
+    save_books_file << iter->second.price << "/";
+    save_books_file << static_cast<std::underlying_type<BookState>::type>(iter->second.state) << "/";
+    save_books_file << iter->second.id_borrower << "/";
+    save_books_file << iter->second.return_date << "\\";
     save_books_file << std::endl;
   }
   save_books_file.close();    //On ferme le fichier
 }
-void Books::load()  //On défini la fonction permettant de charger la table de Books
+void Books::load(const std::string file_name = "save/books.txt", char delimiter = '/', char end_line = '\\')  //On défini la fonction permettant de charger la table de Books
 {
+    std::string str1, str2;
 
+    uint key, id_borrower;
+    std::string title;
+    float price;
+    BookState state;
+    std::time_t return_date;
+
+    std::ifstream stream(file_name);
+
+    std::getline(stream, str1);
+    while (str1.find(end_line) != std::string::npos)
+    {
+      str2 = str1;
+      str2 = str1.substr(str1.find(delimiter));
+      key = stoul(str1.substr(0, str1.size() - str2.size()));
+      str1 = str2.substr(1);
+
+      str2 = str1;
+      str2 = str1.substr(str1.find(delimiter));
+      title = str1.substr(0, str1.size() - str2.size());
+      str1 = str2.substr(1);
+
+      str2 = str1;
+      str2 = str1.substr(str1.find(delimiter));
+      price = std::strtof(str1.substr(0, str1.size() - str2.size()).c_str(), 0);
+      str1 = str2.substr(1);
+
+      str2 = str1;
+      str2 = str1.substr(str1.find(delimiter));
+      state = static_cast<BookState>(std::stoul(str1.substr(0, str1.size() - str2.size())));
+      str1 = str2.substr(1);
+
+      str2 = str1;
+      str2 = str1.substr(str1.find(delimiter));
+      id_borrower = std::stoul(str1.substr(0, str1.size() - str2.size()));
+      str1 = str2.substr(1);
+      str2 = str1;
+
+      return_date = std::stoul(str1.substr(0, str2.size() - 1));
+
+      table.emplace(key, BookInfo{title, price, state, id_borrower, return_date});
+      std::getline(stream, str1);
+    }
 }
 void Books::insert(std::string title, float price, BookState state = BookState::AVAILABLE, uint id_borrower=0, std::time_t return_date=std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()))
 {
@@ -345,11 +388,11 @@ void Members::save(std::string path = "save/members.txt") //On défini la foncti
   save_members_file.open (path);    //On ouvre le fichier au chemin spécifique
   for (auto iter = table.begin(); iter != table.end(); ++iter)  //On inscrit les valeurs de toute les iterations jusqu'à arriver à la dernière
   {
-    save_members_file << "key: " << iter->first << " / ";
-    save_members_file << "nom: " << iter->second.nom << " / ";
-    save_members_file << "prenom: " << iter->second.prenom << " / ";
-    save_members_file << "etat: " << static_cast<std::underlying_type<MemberState>::type>(iter->second.state) << " / ";
-    save_members_file << "date_arrivee: " << iter->second.joined_on;
+    save_members_file << iter->first << "/";
+    save_members_file << iter->second.nom << "/";
+    save_members_file << iter->second.prenom << "/";
+    save_members_file << static_cast<std::underlying_type<MemberState>::type>(iter->second.state) << "/";
+    save_members_file << iter->second.joined_on << "\\";
     save_members_file << std::endl;
   }
   save_members_file.close();   //On ferme le fichier
@@ -459,30 +502,28 @@ void System::borrow(Books book_inst, uint book_id, uint member_id, uint days_of_
 
 int main(int, char**)
 {
+  /*On crée nos objets*/
     Members members;
     Books books;
     System lib_system;
 
-    /*On initialise notre table de books*/
-    books.insert("Le silence des agneaux",100.0);
-    books.insert("Le seigneur des anneaux",50.0);
-    books.insert("Harry Potter",15.6);
-    books.insert("Wolfdev vol.2",999.9);
+    /*On charge les dossier de sauvegarde*/
+    books.load();
+    members.load();
 
-    /*On initialise notre table de membres*/
-    members.insert("PERINAZZO", "Hugo");
-    members.insert("PERINAZZO", "Lisa");
-    members.insert("PERINAZZO", "Christian");
-    members.insert("PERINAZZO", "Christine");
-    members.insert("Fock", "Edouard");
+    /*On insère dans notre table de books*/
+    //books.insert("Le silence des agneaux",100.0);
 
+    /*On insère dans notre table de membres*/
+    //members.insert("PERINAZZO", "Hugo");
+    
     /*On supprime une ligne de nos table se trouvant à l'id correspondant*/
-    members.delOne(13);
-    books.delOne(13);
-
+    //books.delOne(545404204);
+    //members.delOne(545404204);
+    
     /*on sauvegarde nos tables*/
-    books.save();
-    members.save();
+    //books.save();
+    //members.save();
 
     /*On affiche nos tables*/
     books.disp();
