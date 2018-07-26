@@ -132,7 +132,7 @@ struct Members //contient une table de tous les membres ainsi que des fonctions 
   public:                                         //On retourne au public, les éléments seront à nouveau appelables en dehors de l'instance de la classe
     std::unordered_map<uint, MemberInfo> table;   // table de tout les membres
     void save(std::string path);
-    void load();
+    void load(const std::string file_name, char delimiter, char end_line);
     void insert(std::string nom, std::string prenom, MemberState state, time_t joined_on); //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
     void delOne(uint id);
     void disp() const;
@@ -292,33 +292,27 @@ void Books::load(const std::string file_name = "save/books.txt", char delimiter 
     std::getline(stream, str1);
     while (str1.find(end_line) != std::string::npos)
     {
-      str2 = str1;
       str2 = str1.substr(str1.find(delimiter));
       key = stoul(str1.substr(0, str1.size() - str2.size()));
       str1 = str2.substr(1);
 
-      str2 = str1;
       str2 = str1.substr(str1.find(delimiter));
       title = str1.substr(0, str1.size() - str2.size());
       str1 = str2.substr(1);
 
-      str2 = str1;
       str2 = str1.substr(str1.find(delimiter));
       price = std::strtof(str1.substr(0, str1.size() - str2.size()).c_str(), 0);
       str1 = str2.substr(1);
 
-      str2 = str1;
       str2 = str1.substr(str1.find(delimiter));
       state = static_cast<BookState>(std::stoul(str1.substr(0, str1.size() - str2.size())));
       str1 = str2.substr(1);
 
-      str2 = str1;
       str2 = str1.substr(str1.find(delimiter));
       id_borrower = std::stoul(str1.substr(0, str1.size() - str2.size()));
       str1 = str2.substr(1);
-      str2 = str1;
 
-      return_date = std::stoul(str1.substr(0, str2.size() - 1));
+      return_date = std::stoul(str1.substr(0, str1.size() - 1));
 
       table.emplace(key, BookInfo{title, price, state, id_borrower, return_date});
       std::getline(stream, str1);
@@ -397,9 +391,41 @@ void Members::save(std::string path = "save/members.txt") //On défini la foncti
   }
   save_members_file.close();   //On ferme le fichier
 }
-void Members::load()  //On défini la fonction permettant de charger la table de Members
+void Members::load(const std::string file_name = "save/members.txt", char delimiter = '/', char end_line = '\\')  //On défini la fonction permettant de charger la table de Members
 {
-  
+    std::string str1, str2;
+
+    uint key;
+    std::string nom, prenom;
+    MemberState state;
+    std::time_t joined_on;
+
+    std::ifstream stream(file_name);
+
+    std::getline(stream, str1);
+    while (str1.find(end_line) != std::string::npos)
+    {
+      str2 = str1.substr(str1.find(delimiter));
+      key = stoul(str1.substr(0, str1.size() - str2.size()));
+      str1 = str2.substr(1);
+
+      str2 = str1.substr(str1.find(delimiter));
+      nom = str1.substr(0, str1.size() - str2.size());
+      str1 = str2.substr(1);
+
+      str2 = str1.substr(str1.find(delimiter));
+      prenom = std::strtof(str1.substr(0, str1.size() - str2.size()).c_str(), 0);
+      str1 = str2.substr(1);
+
+      str2 = str1.substr(str1.find(delimiter));
+      state = static_cast<MemberState>(std::stoul(str1.substr(0, str1.size() - str2.size())));
+      str1 = str2.substr(1);
+
+      joined_on = std::stoul(str1.substr(0, str1.size() - 1));
+
+      table.emplace(key, MemberInfo{nom, prenom, state, joined_on});
+      std::getline(stream, str1);
+    }
 }
 void Members::insert(std::string nom, std::string prenom, MemberState state = MemberState::NORMAL, time_t joined_on = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())) //on défini la fonction membre qui permet d'insérer une nouvelle ligne dans la table
 {
@@ -511,15 +537,13 @@ int main(int, char**)
     books.load();
     members.load();
 
-    /*On insère dans notre table de books*/
-    //books.insert("Le silence des agneaux",100.0);
-
-    /*On insère dans notre table de membres*/
-    //members.insert("PERINAZZO", "Hugo");
+    /*On insère dans nos table*/
+    //members.insert("PERINAZZO", "Christian");
+    //books.insert("Le silences des agneaux",100.0);
     
     /*On supprime une ligne de nos table se trouvant à l'id correspondant*/
     //books.delOne(545404204);
-    //members.delOne(545404204);
+    //members.delOne(581869302);
     
     /*on sauvegarde nos tables*/
     //books.save();
