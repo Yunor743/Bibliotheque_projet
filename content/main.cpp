@@ -5,10 +5,13 @@
 #include <ctime>
 #include <iomanip>
 #include <chrono>
+#include <string>
 
 using uint = unsigned int; //on pourra utiliser uint pour représenter un unsigned int
 
 std::time_t addDaysToDate(uint nb_of_days, std::time_t start_date);
+std::string interpretMemberState(uint state);
+std::string interpretBookState(uint state);
 
 
 
@@ -37,7 +40,7 @@ std::time_t addDaysToDate(uint nb_of_days, std::time_t start_date);
 
 //#pragma once
 #include <unordered_map>
-#include <string>
+//#include <string>
 //#include <ctime>
 #include <random>
 //#include <chrono>
@@ -195,7 +198,45 @@ std::time_t addDaysToDate(uint nb_of_days, std::time_t start_date = std::chrono:
     tm.tm_mday += nb_of_days;
     return std::mktime(&tm);
 }
-
+std::string interpretMemberState(uint state)
+{
+  switch ( state )  
+  {
+      case 0:  
+        return "BANNED";
+        break;
+      case 1:
+        return "NORMAL";
+        break;
+      case 2:
+        return "PRIVILEGED";
+        break;
+      default:
+        return "NORMAL";
+        break;
+  }
+}
+std::string interpretBookState(uint state)
+{
+  switch ( state )  
+  {
+      case 0:  
+        return "AVAILABLE";
+        break;
+      case 1:
+        return "BORROWED";
+        break;
+      case 2:
+        return "LOST";
+        break;
+      case 3:
+        return "ORDERED";
+        break;
+      default:
+        return "AVAILABLE";
+        break;
+  }
+}
 
 
 
@@ -231,7 +272,7 @@ void Books::save(std::string path = "save/books.txt") //On défini la fonction p
     save_books_file << "prix: " << iter->second.price << " / ";
     save_books_file << "etat: " << static_cast<std::underlying_type<BookState>::type>(iter->second.state) << " / ";
     save_books_file << "empreinteur: " << iter->second.id_borrower << " / ";
-    save_books_file << "date_retour: " << std::put_time(std::localtime(&iter->second.return_date), "%Y %m %d");
+    save_books_file << "date_retour: " << iter->second.return_date;
     save_books_file << std::endl;
   }
   save_books_file.close();    //On ferme le fichier
@@ -262,7 +303,7 @@ void Books::disp() const  //Définition de la fonction AFFICHER
     std::cout << "key: " << iter->first << " / ";
     std::cout << "titre: " << iter->second.title << " / ";
     std::cout << "prix: " << iter->second.price << " / ";
-    std::cout << "etat: " << static_cast<std::underlying_type<BookState>::type>(iter->second.state) << " / ";
+    std::cout << "etat: " << interpretBookState(static_cast<std::underlying_type<BookState>::type>(iter->second.state)) << " / ";
     std::cout << "empreinteur: " << iter->second.id_borrower << " / ";
     std::cout << "date_retour: " << std::put_time(std::localtime(&iter->second.return_date), "%Y %m %d");
     std::cout << std::endl;
@@ -308,7 +349,7 @@ void Members::save(std::string path = "save/members.txt") //On défini la foncti
     save_members_file << "nom: " << iter->second.nom << " / ";
     save_members_file << "prenom: " << iter->second.prenom << " / ";
     save_members_file << "etat: " << static_cast<std::underlying_type<MemberState>::type>(iter->second.state) << " / ";
-    save_members_file << "date_arrivee: " << std::put_time(std::localtime(&iter->second.joined_on), "%Y %m %d");
+    save_members_file << "date_arrivee: " << iter->second.joined_on;
     save_members_file << std::endl;
   }
   save_members_file.close();   //On ferme le fichier
@@ -339,7 +380,7 @@ void Members::disp() const //Définition de la fonction AFFICHER
     std::cout << "key: " << iter->first << " / ";
     std::cout << "nom: " << iter->second.nom << " / ";
     std::cout << "prenom: " << iter->second.prenom << " / ";
-    std::cout << "etat: " << static_cast<std::underlying_type<MemberState>::type>(iter->second.state) << " / ";
+    std::cout << "etat: " << interpretMemberState(static_cast<std::underlying_type<MemberState>::type>(iter->second.state)) << " / ";
     std::cout << "date_arrivee: " << std::put_time(std::localtime(&iter->second.joined_on), "%Y %m %d");
     std::cout << std::endl;
   }
