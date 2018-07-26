@@ -1,0 +1,4 @@
+key: 3586334585 / titre: Wolfdev vol.2 / prix: 999.9 / etat: 0 / empreinteur: 0 / date_retour: 2018 07 26
+key: 3890346734 / titre: Harry Potter / prix: 15.6 / etat: 0 / empreinteur: 0 / date_retour: 2018 07 26
+key: 3499211612 / titre: Le silence des agneaux / prix: 100 / etat: 0 / empreinteur: 0 / date_retour: 2018 07 26
+key: 581869302 / titre: Le seigneur des anneaux / prix: 50 / etat: 0 / empreinteur: 0 / date_retour: 2018 07 26

@@ -4,19 +4,18 @@
 #include <iostream>
 #include <ctime>
 #include <iomanip>
+#include <chrono>
 
 using uint = unsigned int; //on pourra utiliser uint pour représenter un unsigned int
-enum class DateDivision : uint
-{
-    YEAR,
-    MONTH,
-    DAY,
-    HOUR,
-    MIN,
-    SEC
-};
-int get_date_spec(DateDivision date_div);
-std::time_t parse_days_in_date(uint nb_of_days, std::time_t start_date);
+
+std::time_t addDaysToDate(uint nb_of_days, std::time_t start_date);
+
+
+
+
+
+
+
 
 
 
@@ -39,8 +38,10 @@ std::time_t parse_days_in_date(uint nb_of_days, std::time_t start_date);
 //#pragma once
 #include <unordered_map>
 #include <string>
-#include <ctime>
+//#include <ctime>
 #include <random>
+//#include <chrono>
+#include <fstream>
 
 //using uint = unsigned int; //on pourra utiliser uint pour représenter un unsigned int
 
@@ -54,9 +55,9 @@ enum class BookState : int //état du livre (empreinté, perdu, en achat, dispo)
 struct BookInfo // on stock toute les informations relatives à un livre
 {
     std::string title;          //titre du livre
-    BookState state;            //état du livre (empreinté, perdu, en achat, dispo)
-    uint id_member;             //id du membre qui à empreinté le livre
     float price;                //prix théorique du livre si il doit y avoir un remboursement
+    BookState state;            //état du livre (empreinté, perdu, en achat, dispo)
+    uint id_borrower;           //id du membre qui à empreinté le livre
     std::time_t return_date;    //Date où le livre doit être retourner à la bibliothèque
 };
 struct Books
@@ -65,9 +66,16 @@ struct Books
     std::mt19937 generator; 
   public:                                         //On retourne au public, les éléments seront à nouveau appelables en dehors de l'instance de la classe
     std::unordered_map<uint, BookInfo> table;     // table de tout les livres
-    void insert(std::string title, BookState state, uint id_borrower, float price, std::time_t return_date);                                //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
+    void save(std::string path);
+    void load();
+    void insert(std::string title, float price, BookState state, uint id_borrower, std::time_t return_date);                                //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
+    void delOne(uint id);
     void disp() const;
 };
+
+
+
+
 
 
 
@@ -96,14 +104,16 @@ struct Books
 //#include <string>
 //#include <ctime>
 //#include <random>
-#include <chrono>
+//#include <chrono>
+//#include <fstream>
 
 //using uint = unsigned int;  //on poura utiliser uint pour représenter un unsigned int
 
-enum class MemberState : bool // état du membre (banni, neutre)
+enum class MemberState : int // état du membre (banni, neutre, privilégié)
 {
   BANNED,
-  NORMAL
+  NORMAL,
+  PRIVILEGED
 };
 struct MemberInfo //on stocke toute les informations relatives à un membre
 {
@@ -118,9 +128,20 @@ struct Members //contient une table de tous les membres ainsi que des fonctions 
     std::mt19937 generator;
   public:                                         //On retourne au public, les éléments seront à nouveau appelables en dehors de l'instance de la classe
     std::unordered_map<uint, MemberInfo> table;   // table de tout les membres
-    void insert(std::string nom, std::string prenom, MemberState state); //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
+    void save(std::string path);
+    void load();
+    void insert(std::string nom, std::string prenom, MemberState state, time_t joined_on); //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
+    void delOne(uint id);
     void disp() const;
 };
+
+
+
+
+
+
+
+
 
 
 
@@ -163,38 +184,23 @@ struct System
 
 
 
-/*classic_content.cpp*/
-int get_date_spec(DateDivision date_div = DateDivision::YEAR)
-{
-    std::time_t result = std::time(nullptr);
-    tm full_date = *std::localtime(&result);
-    switch(date_div)
-    {
-        case DateDivision::YEAR:
-            return full_date.tm_year + 1900; //Les années commence à se compter à partir de l'année 1900
-            break;
-        case DateDivision::MONTH:
-            return full_date.tm_mon + 1; //les mois se compte à partir du moi 0
-            break;
-        case DateDivision::DAY:
-            return full_date.tm_mday; //Les jours
-            break;
-        case DateDivision::HOUR:
-            return full_date.tm_hour; // les heures
-            break;
-        case DateDivision::MIN:
-            return full_date.tm_min; // les minutes
-            break;
-        case DateDivision::SEC:
-            return full_date.tm_sec; // les secondes
-            break;
-    }
-    return 1;
-}
-std::time_t parse_days_in_date(uint nb_of_days, std::time_t start_date = std::time(nullptr))
-{
 
+
+
+
+/*classic_content.cpp*/
+std::time_t addDaysToDate(uint nb_of_days, std::time_t start_date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()))
+{
+    std::tm tm = *std::localtime(&start_date);
+    tm.tm_mday += nb_of_days;
+    return std::mktime(&tm);
 }
+
+
+
+
+
+
 
 
 
@@ -214,22 +220,66 @@ std::time_t parse_days_in_date(uint nb_of_days, std::time_t start_date = std::ti
 
 
 /*books.cpp*/
-
-
-void Books::insert(std::string title, BookState state = BookState::AVAILABLE, uint id_borrower, float price, std::time_t return_date)
+void Books::save(std::string path = "save/books.txt") //On défini la fonction permetant de sauvegarder notre table de Books dans un fichier
 {
-  uint key;
+  std::ofstream save_books_file;    //On instancie le flux
+  save_books_file.open (path);      //On ouvre le fichier au chemin spécifique
+  for (auto iter = table.begin(); iter != table.end(); ++iter)    //On inscrit les valeurs de toute les iterations jusqu'à arriver à la dernière
+  {
+    save_books_file << "key: " << iter->first << " / ";
+    save_books_file << "titre: " << iter->second.title << " / ";
+    save_books_file << "prix: " << iter->second.price << " / ";
+    save_books_file << "etat: " << static_cast<std::underlying_type<BookState>::type>(iter->second.state) << " / ";
+    save_books_file << "empreinteur: " << iter->second.id_borrower << " / ";
+    save_books_file << "date_retour: " << std::put_time(std::localtime(&iter->second.return_date), "%Y %m %d");
+    save_books_file << std::endl;
+  }
+  save_books_file.close();    //On ferme le fichier
+}
+void Books::load()  //On défini la fonction permettant de charger la table de Books
+{
+
+}
+void Books::insert(std::string title, float price, BookState state = BookState::AVAILABLE, uint id_borrower=0, std::time_t return_date=std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()))
+{
+  uint key;  //on va générer aléatoirement la clé avec notre générateur generator
   do
   {
     key = generator();
-  } 
-  while (table.find(key) == table.end());
-  table.emplace(key, BookInfo{title, state, id_borrower, price, return_date});
+  } while (table.find(key) != table.end() && table.begin() != table.end() );    // Si table.find(key) est égale à table.end (donc la fin de table) alors c'est que cette clé n'éxiste pas encore et on peut passer à la suite, sinon on recommence
+  table.emplace(key, BookInfo{title, price, state, id_borrower, return_date});  // On insère notre nouvelle ligne
+  save(); //On sauvegarde les changements apportés
 }
-void Books::disp() const
+void Books::delOne(uint id) //Définition de la fonction supprimant une ligne de la table Books
 {
-
+  table.erase(id);    //On supprime la ligne correspondant à l'id cible
+  save();             //On sauvegarde le changement apporté
 }
+void Books::disp() const  //Définition de la fonction AFFICHER
+{
+  for (auto iter = table.begin(); iter != table.end(); ++iter)  //On affiche les valeurs de toute les iterations jusqu'à arriver à la dernière
+  {
+    std::cout << "key: " << iter->first << " / ";
+    std::cout << "titre: " << iter->second.title << " / ";
+    std::cout << "prix: " << iter->second.price << " / ";
+    std::cout << "etat: " << static_cast<std::underlying_type<BookState>::type>(iter->second.state) << " / ";
+    std::cout << "empreinteur: " << iter->second.id_borrower << " / ";
+    std::cout << "date_retour: " << std::put_time(std::localtime(&iter->second.return_date), "%Y %m %d");
+    std::cout << std::endl;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -248,22 +298,60 @@ void Books::disp() const
 
 
 /*members.cpp*/
-
-void Members::insert(std::string nom, std::string prenom, MemberState state = MemberState::NORMAL) //on défini la fonction membre qui permet d'insérer une nouvelle ligne dans la table
+void Members::save(std::string path = "save/members.txt") //On défini la fonction permetant de sauvegarder notre table de Members dans un fichier
+{
+  std::ofstream save_members_file;  //On instancie le flux
+  save_members_file.open (path);    //On ouvre le fichier au chemin spécifique
+  for (auto iter = table.begin(); iter != table.end(); ++iter)  //On inscrit les valeurs de toute les iterations jusqu'à arriver à la dernière
+  {
+    save_members_file << "key: " << iter->first << " / ";
+    save_members_file << "nom: " << iter->second.nom << " / ";
+    save_members_file << "prenom: " << iter->second.prenom << " / ";
+    save_members_file << "etat: " << static_cast<std::underlying_type<MemberState>::type>(iter->second.state) << " / ";
+    save_members_file << "date_arrivee: " << std::put_time(std::localtime(&iter->second.joined_on), "%Y %m %d");
+    save_members_file << std::endl;
+  }
+  save_members_file.close();   //On ferme le fichier
+}
+void Members::load()  //On défini la fonction permettant de charger la table de Members
+{
+  
+}
+void Members::insert(std::string nom, std::string prenom, MemberState state = MemberState::NORMAL, time_t joined_on = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())) //on défini la fonction membre qui permet d'insérer une nouvelle ligne dans la table
 {
   uint key; //on va générer aléatoirement la clé avec notre générateur generator
   do
   {
     key = generator();
-  }
-  while (table.find(key) == table.end()); // Si table.find(key) est égale à table.end (donc la fin de table) alors c'est que cette clé n'éxiste pas encore et on peut passer à la suite, sinon on recommence
-  table.emplace(key, MemberInfo{nom, prenom, state, std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())}); //
+  } while (table.find(key) != table.end() && table.begin() != table.end() ); // Si table.find(key) est égale à table.end (donc la fin de table) alors c'est que cette clé n'éxiste pas encore et on peut passer à la suite, sinon on recommence
+  table.emplace(key, MemberInfo{nom, prenom, state, joined_on});             // On insère notre nouvelle ligne
+  save(); //On sauvegarde les changements apportés
 }
-void Members::disp() const
+void Members::delOne(uint id) //Définition de la fonction supprimant une ligne de la table Members
 {
-
-
+  table.erase(id);    //On supprime la ligne correspondant à l'id cible
+  save();             //On sauvegarde le changement apporté
 }
+void Members::disp() const //Définition de la fonction AFFICHER
+{
+  for (auto iter = table.begin(); iter != table.end(); ++iter)  //On affiche les valeurs de toute les iterations jusqu'à arriver à la dernière
+  {
+    std::cout << "key: " << iter->first << " / ";
+    std::cout << "nom: " << iter->second.nom << " / ";
+    std::cout << "prenom: " << iter->second.prenom << " / ";
+    std::cout << "etat: " << static_cast<std::underlying_type<MemberState>::type>(iter->second.state) << " / ";
+    std::cout << "date_arrivee: " << std::put_time(std::localtime(&iter->second.joined_on), "%Y %m %d");
+    std::cout << std::endl;
+  }
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -287,8 +375,8 @@ void System::borrow(Books book_inst, uint book_id, uint member_id, uint days_of_
     if(one_bookinfo.state == BookState::AVAILABLE)                      //on s'assure que le livre est disponible
     {
       one_bookinfo.state = BookState::BORROWED;                         //On déclare le livre comme empreinté
-      one_bookinfo.id_member = member_id;                               //On défini qui est le dernier empreinteur
-      one_bookinfo.return_date = parse_days_in_date(days_of_borrowing); //On défini la date de retour
+      one_bookinfo.id_borrower = member_id;                               //On défini qui est le dernier empreinteur
+      one_bookinfo.return_date = addDaysToDate(days_of_borrowing);      //On défini la date de retour
     }
     else
     {
@@ -316,6 +404,14 @@ void System::borrow(Books book_inst, uint book_id, uint member_id, uint days_of_
 
 
 
+
+
+
+
+
+
+
+
 /*main.cpp*/
 #include <iostream> // For debug purposes
 
@@ -324,11 +420,33 @@ int main(int, char**)
 {
     Members members;
     Books books;
+    System lib_system;
 
-    Members mes_membres;
-    auto myactor = mes_membres.table.find(13);
+    /*On initialise notre table de books*/
+    books.insert("Le silence des agneaux",100.0);
+    books.insert("Le seigneur des anneaux",50.0);
+    books.insert("Harry Potter",15.6);
+    books.insert("Wolfdev vol.2",999.9);
 
+    /*On initialise notre table de membres*/
+    members.insert("PERINAZZO", "Hugo");
+    members.insert("PERINAZZO", "Lisa");
+    members.insert("PERINAZZO", "Christian");
+    members.insert("PERINAZZO", "Christine");
+    members.insert("Fock", "Edouard");
 
+    /*On supprime une ligne de nos table se trouvant à l'id correspondant*/
+    members.delOne(13);
+    books.delOne(13);
 
+    /*on sauvegarde nos tables*/
+    books.save();
+    members.save();
+
+    /*On affiche nos tables*/
+    books.disp();
+    members.disp();
+
+    system("pause");
     return 0;
 }
