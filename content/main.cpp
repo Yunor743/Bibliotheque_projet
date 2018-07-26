@@ -204,7 +204,7 @@ struct Members //contient une table de tous les membres ainsi que des fonctions 
 
 struct System
 {
-  void borrow(Books book_inst, uint book_id, uint member_id, uint days_of_borrowing);
+  void borrow(Books *book_inst_ptr, uint book_id, uint member_id, uint days_of_borrowing);
   void return_book();
 };
 
@@ -487,7 +487,7 @@ void Members::load(const std::string file_name = "save/members.txt", char delimi
       str1 = str2.substr(1);
 
       str2 = str1.substr(str1.find(delimiter));
-      prenom = std::strtof(str1.substr(0, str1.size() - str2.size()).c_str(), 0);
+      prenom = str1.substr(0, str1.size() - str2.size());
       str1 = str2.substr(1);
 
       str2 = str1.substr(str1.find(delimiter));
@@ -561,16 +561,20 @@ void Members::disp() const //Définition de la fonction AFFICHER
 
 /*system.cpp*/
 
-void System::borrow(Books book_inst, uint book_id, uint member_id, uint days_of_borrowing = 30) //function permettant l'emprunt d'un livre
+void System::borrow(Books *book_inst_ptr, uint book_id, uint member_id, uint days_of_borrowing = 30) //function permettant l'emprunt d'un livre
 {
+  Books book_inst = *book_inst_ptr;
   if(book_inst.table.find(book_id) != book_inst.table.end())            //On s'assure que le livre demandé existe
   {
-    BookInfo one_bookinfo = book_inst.table[book_id];                   //on instancie toute les informations sur ce livre dans one_bookinfo
-    if(one_bookinfo.state == BookState::AVAILABLE)                      //on s'assure que le livre est disponible
+    auto book_table_iter = book_inst.table.find(book_id);
+    auto *iter_ptr = &book_table_iter;
+    auto iter = *iter_ptr;
+    auto var = iter->second;
+    if(var.state == BookState::AVAILABLE)
     {
-      one_bookinfo.state = BookState::BORROWED;                         //On déclare le livre comme empreinté
-      one_bookinfo.id_borrower = member_id;                               //On défini qui est le dernier empreinteur
-      one_bookinfo.return_date = addDaysToDate(days_of_borrowing);      //On défini la date de retour
+      var.state = BookState::BORROWED;
+      var.id_borrower = member_id;
+      var.return_date = addDaysToDate(days_of_borrowing);
     }
     else
     {
@@ -625,7 +629,7 @@ int main(int, char**)
     members.load();
 
     /*On insère dans nos table*/
-    //members.insert("PERINAZZO", "Christian");
+    //members.insert("PERINAZZO", "Lisa");
     //books.insert("Le silences des agneaux",100.0);
     
     /*On supprime une ligne de nos table se trouvant à l'id correspondant*/
@@ -635,6 +639,9 @@ int main(int, char**)
     /*on sauvegarde nos tables*/
     //books.save();
     //members.save();
+
+    /*system*/
+    lib_system.borrow(&books, 581869302, 3499211612);
 
     /*On affiche nos tables*/
     books.disp();
