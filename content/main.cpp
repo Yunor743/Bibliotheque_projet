@@ -36,6 +36,20 @@ std::string interpretBookState(uint state);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*books.hpp*/
 
 //#pragma once
@@ -75,6 +89,20 @@ struct Books
     void delOne(uint id);
     void disp() const;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -160,6 +188,16 @@ struct Members //contient une table de tous les membres ainsi que des fonctions 
 
 
 
+
+
+
+
+
+
+
+
+
+
 /*system.hpp*/
 
 //using uint = unsigned int;  //on poura utiliser uint pour représenter un unsigned int
@@ -169,6 +207,21 @@ struct System
   void borrow(Books book_inst, uint book_id, uint member_id, uint days_of_borrowing);
   void return_book();
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -237,6 +290,21 @@ std::string interpretBookState(uint state)
         break;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -375,6 +443,11 @@ void Books::disp() const  //Définition de la fonction AFFICHER
 
 
 
+
+
+
+
+
 /*members.cpp*/
 void Members::save(std::string path = "save/members.txt") //On défini la fonction permetant de sauvegarder notre table de Members dans un fichier
 {
@@ -475,6 +548,17 @@ void Members::disp() const //Définition de la fonction AFFICHER
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 /*system.cpp*/
 
 void System::borrow(Books book_inst, uint book_id, uint member_id, uint days_of_borrowing = 30) //function permettant l'emprunt d'un livre
@@ -498,6 +582,9 @@ void System::borrow(Books book_inst, uint book_id, uint member_id, uint days_of_
     //Erreur: le livre à empreinter n'éxiste pas
   }
 }
+
+
+
 
 
 
