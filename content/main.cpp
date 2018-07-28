@@ -204,7 +204,7 @@ struct Members //contient une table de tous les membres ainsi que des fonctions 
 
 struct System
 {
-  void borrow(Books *book_inst_ptr, uint book_id, uint member_id, uint days_of_borrowing);
+  void borrow(Books &book_inst, uint book_id, uint member_id, uint days_of_borrowing);
   void return_book();
 };
 
@@ -555,26 +555,20 @@ void Members::disp() const //Définition de la fonction AFFICHER
 
 
 
-
-
-
-
 /*system.cpp*/
 
-void System::borrow(Books *book_inst_ptr, uint book_id, uint member_id, uint days_of_borrowing = 30) //function permettant l'emprunt d'un livre
-{
-  Books book_inst = *book_inst_ptr;
+void System::borrow(Books &book_inst, uint book_id, uint member_id, uint days_of_borrowing = 30) //function permettant l'emprunt d'un livre
+{    
   if(book_inst.table.find(book_id) != book_inst.table.end())            //On s'assure que le livre demandé existe
   {
-    auto book_table_iter = book_inst.table.find(book_id);
-    auto *iter_ptr = &book_table_iter;
-    auto iter = *iter_ptr;
-    auto var = iter->second;
-    if(var.state == BookState::AVAILABLE)
+    std::unordered_map<uint, BookInfo>::iterator book_table_iter = book_inst.table.find(book_id);
+    BookInfo &one_bookinfo = (&(*book_table_iter))->second;
+    if(one_bookinfo.state == BookState::AVAILABLE)                     //On s'arrure que le livre demandé est disponible
     {
-      var.state = BookState::BORROWED;
-      var.id_borrower = member_id;
-      var.return_date = addDaysToDate(days_of_borrowing);
+      one_bookinfo.state = BookState::BORROWED;
+      one_bookinfo.id_borrower = member_id;
+      one_bookinfo.return_date = addDaysToDate(days_of_borrowing);
+      book_inst.save(); //On sauvegarde les changements apporté
     }
     else
     {
@@ -586,8 +580,6 @@ void System::borrow(Books *book_inst_ptr, uint book_id, uint member_id, uint day
     //Erreur: le livre à empreinter n'éxiste pas
   }
 }
-
-
 
 
 
@@ -639,9 +631,9 @@ int main(int, char**)
     /*on sauvegarde nos tables*/
     //books.save();
     //members.save();
-
+    
     /*system*/
-    lib_system.borrow(&books, 581869302, 3499211612);
+    lib_system.borrow(books, 3890346734, 3499211612);
 
     /*On affiche nos tables*/
     books.disp();
