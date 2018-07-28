@@ -209,8 +209,8 @@ struct Members //contient une table de tous les membres ainsi que des fonctions 
 
 struct System
 {
-  void borrow(Books &book_inst, Members &member_inst, uint book_id, uint member_id, uint days_of_borrowing);
-  void return_book();
+  void borrow(Books &book_inst, Members &member_inst, uint book_id, uint member_id, uint days_of_borrowing);  //Déclaration de la fonction permettant l'empreint d'un livre'
+  void return_book(Books &book_inst, Members &member_inst, uint book_id); //Déclaration de la fonction permettant de déclaré un livre comme rapporté
 };
 
 
@@ -415,7 +415,17 @@ void Books::disp() const  //Définition de la fonction AFFICHER
 }
 uint Books::BorrowedBooksByMember(uint member_id)
 {
-
+  uint compteur = 0;
+  std::unordered_map<uint, BookInfo>::iterator iter = table.begin();
+  while(iter != table.end())
+  {
+    if(iter->second.id_borrower == member_id)
+    {
+      ++compteur;
+    }
+    ++iter;
+  }
+  return compteur;
 }
 
 
@@ -583,8 +593,7 @@ void System::borrow(Books &book_inst, Members &member_inst, uint book_id, uint m
 {
   if(book_inst.table.find(book_id) != book_inst.table.end())            //On s'assure que le livre demandé existe
   {
-    std::unordered_map<uint, BookInfo>::iterator book_table_iter = book_inst.table.find(book_id); //on trouve l'itérateur de la ligne correspondant 
-    BookInfo &one_bookinfo = (&(*book_table_iter))->second;            //On obtient le BookInfo
+    BookInfo &one_bookinfo = (&(*book_inst.table.find(book_id)))->second;            //On obtient le BookInfo
     if(one_bookinfo.state == BookState::AVAILABLE)                     //On s'arrure que le livre demandé est disponible
     {
       if(member_inst.ReturnedBooksByMember(member_id) >= 20)    //Si le membre à déja empreinter plus de 20 livres sans accroc
@@ -623,6 +632,30 @@ void System::borrow(Books &book_inst, Members &member_inst, uint book_id, uint m
   else
   {
     //Erreur: le livre à empreinter n'éxiste pas
+  }
+}
+void System::return_book(Books &book_inst, Members &member_inst, uint book_id)  //Définition de la fonction permettant de déclaré un livre comme rapporté
+{
+  if(book_inst.table.find(book_id) != book_inst.table.end()) //on vérifie que le livre existe
+  {
+    if(book_inst.table.find(book_id)->second.state == BookState::BORROWED)  //On vérifie que le livre à été empreinté
+    {
+      BookInfo &one_bookinfo = (&(*book_inst.table.find(book_id)))->second;            //On obtient le BookInfo
+      MemberInfo &one_memberinfo = (&(*member_inst.table.find(one_bookinfo.id_borrower)))->second;
+      ++one_memberinfo.book_returned;
+      one_bookinfo.id_borrower = 0;
+      one_bookinfo.return_date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+      one_bookinfo.state = BookState::AVAILABLE;
+      std::cout << "test" << std::endl;
+    }
+    else
+    {
+      //Erreur: Ce livre est soit perdu, disponible ou en commande mais il n'a pas été empreinté
+    }
+  }
+  else
+  {
+    //Erreur: le livre n'est pas dans le registe
   }
 }
 
@@ -678,12 +711,13 @@ int main(int, char**)
     //members.save();
     
     /*Opération system*/
-     lib_system.borrow(books, members, 3890346734, 3499211612);
+    //lib_system.borrow(books, members, 545404204, 3499211612);
+    //lib_system.return_book(books, members, 545404204);
+    
 
     /*On affiche nos tables*/
     books.disp();
     members.disp();
-
     system("pause");
     return 0;
 }
