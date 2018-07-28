@@ -83,11 +83,12 @@ struct Books
     std::mt19937 generator; 
   public:                                         //On retourne au public, les éléments seront à nouveau appelables en dehors de l'instance de la classe
     std::unordered_map<uint, BookInfo> table;     // table de tout les livres
-    void save(std::string path);
-    void load(const std::string file_name, char delimiter, char end_line);
-    void insert(std::string title, float price, BookState state, uint id_borrower, std::time_t return_date);                                //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
-    void delOne(uint id);
-    void disp() const;
+    void save(std::string path);    //cette fonction sauvegarde la table dans un fichier externe
+    void load(const std::string path, char delimiter, char end_line); //cette fonction charge la table depuis un fichier externe
+    void insert(std::string title, float price, BookState state, uint id_borrower, std::time_t return_date);   //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
+    void delOne(uint id); //fonction permettant de supprimer une ligne précise en fonction de l'id de la key
+    void disp() const;    //fonction permettant l'affichage de la table
+    uint BorrowedBooksByMember(uint member_id);
 };
 
 
@@ -140,17 +141,17 @@ struct Books
 
 //using uint = unsigned int;  //on poura utiliser uint pour représenter un unsigned int
 
-enum class MemberState : int // état du membre (banni, neutre, privilégié)
+enum class MemberState : bool // état du membre (banni, neutre, privilégié)
 {
   BANNED,
-  NORMAL,
-  PRIVILEGED
+  NORMAL
 };
 struct MemberInfo //on stocke toute les informations relatives à un membre
 {
     std::string nom;       //nom de famille
     std::string prenom;    // prénom
     MemberState state;     // état du membre (banni, neutre)
+    uint book_returned;
     std::time_t joined_on; // timestamp à laquelle le membre a été ajouté
 };
 struct Members //contient une table de tous les membres ainsi que des fonctions pour edit/lire celle-ci
@@ -159,11 +160,12 @@ struct Members //contient une table de tous les membres ainsi que des fonctions 
     std::mt19937 generator;
   public:                                         //On retourne au public, les éléments seront à nouveau appelables en dehors de l'instance de la classe
     std::unordered_map<uint, MemberInfo> table;   // table de tout les membres
-    void save(std::string path);
-    void load(const std::string file_name, char delimiter, char end_line);
-    void insert(std::string nom, std::string prenom, MemberState state, time_t joined_on); //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
-    void delOne(uint id);
-    void disp() const;
+    void save(std::string path);  //cette fonction sauvegarde la table dans un fichier externe
+    void load(const std::string path, char delimiter, char end_line);  //cette fonction charge la table depuis un fichier externe
+    void insert(std::string nom, std::string prenom, MemberState state, uint book_returned, time_t joined_on); //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
+    void delOne(uint id); //fonction permettant de supprimer une ligne précise en fonction de l'id de la key
+    void disp() const;    //fonction permettant l'affichage de la table
+    uint ReturnedBooksByMember(uint member_id); //définition de la fonction me permetant de savoir combiens de livres le membre à déjà rapporté sans y avoir d'incident
 };
 
 
@@ -200,11 +202,14 @@ struct Members //contient une table de tous les membres ainsi que des fonctions 
 
 /*system.hpp*/
 
+//#pragma once
+//#include <unordered_map>
+
 //using uint = unsigned int;  //on poura utiliser uint pour représenter un unsigned int
 
 struct System
 {
-  void borrow(Books &book_inst, uint book_id, uint member_id, uint days_of_borrowing);
+  void borrow(Books &book_inst, Members &member_inst, uint book_id, uint member_id, uint days_of_borrowing);
   void return_book();
 };
 
@@ -251,22 +256,15 @@ std::time_t addDaysToDate(uint nb_of_days, std::time_t start_date = std::chrono:
     tm.tm_mday += nb_of_days;
     return std::mktime(&tm);
 }
-std::string interpretMemberState(uint state)
+std::string interpretMemberState(bool state)
 {
-  switch ( state )  
+  if(state == 0)  
+  { 
+    return "BANNED";
+  }
+  else
   {
-      case 0:  
-        return "BANNED";
-        break;
-      case 1:
-        return "NORMAL";
-        break;
-      case 2:
-        return "PRIVILEGED";
-        break;
-      default:
-        return "NORMAL";
-        break;
+    return "NORMAL";
   }
 }
 std::string interpretBookState(uint state)
@@ -328,6 +326,7 @@ std::string interpretBookState(uint state)
 
 
 
+
 /*books.cpp*/
 void Books::save(const std::string path = "save/books.txt") //On défini la fonction permetant de sauvegarder notre table de Books dans un fichier
 {
@@ -345,7 +344,7 @@ void Books::save(const std::string path = "save/books.txt") //On défini la fonc
   }
   save_books_file.close();    //On ferme le fichier
 }
-void Books::load(const std::string file_name = "save/books.txt", char delimiter = '/', char end_line = '\\')  //On défini la fonction permettant de charger la table de Books
+void Books::load(const std::string path = "save/books.txt", char delimiter = '/', char end_line = '\\')  //On défini la fonction permettant de charger la table de Books
 {
     std::string str1, str2;
 
@@ -355,7 +354,7 @@ void Books::load(const std::string file_name = "save/books.txt", char delimiter 
     BookState state;
     std::time_t return_date;
 
-    std::ifstream stream(file_name);
+    std::ifstream stream(path);
 
     std::getline(stream, str1);
     while (str1.find(end_line) != std::string::npos)
@@ -414,6 +413,10 @@ void Books::disp() const  //Définition de la fonction AFFICHER
     std::cout << std::endl;
   }
 }
+uint Books::BorrowedBooksByMember(uint member_id)
+{
+
+}
 
 
 
@@ -459,21 +462,22 @@ void Members::save(std::string path = "save/members.txt") //On défini la foncti
     save_members_file << iter->second.nom << "/";
     save_members_file << iter->second.prenom << "/";
     save_members_file << static_cast<std::underlying_type<MemberState>::type>(iter->second.state) << "/";
+    save_members_file << iter->second.book_returned << "/";
     save_members_file << iter->second.joined_on << "\\";
     save_members_file << std::endl;
   }
   save_members_file.close();   //On ferme le fichier
 }
-void Members::load(const std::string file_name = "save/members.txt", char delimiter = '/', char end_line = '\\')  //On défini la fonction permettant de charger la table de Members
+void Members::load(const std::string path = "save/members.txt", char delimiter = '/', char end_line = '\\')  //On défini la fonction permettant de charger la table de Members
 {
     std::string str1, str2;
 
-    uint key;
+    uint key, book_returned;
     std::string nom, prenom;
     MemberState state;
     std::time_t joined_on;
 
-    std::ifstream stream(file_name);
+    std::ifstream stream(path);
 
     std::getline(stream, str1);
     while (str1.find(end_line) != std::string::npos)
@@ -494,20 +498,24 @@ void Members::load(const std::string file_name = "save/members.txt", char delimi
       state = static_cast<MemberState>(std::stoul(str1.substr(0, str1.size() - str2.size())));
       str1 = str2.substr(1);
 
+      str2 = str1.substr(str1.find(delimiter));
+      book_returned = stoul(str1.substr(0, str1.size() - str2.size()));
+      str1 = str2.substr(1);
+
       joined_on = std::stoul(str1.substr(0, str1.size() - 1));
 
-      table.emplace(key, MemberInfo{nom, prenom, state, joined_on});
+      table.emplace(key, MemberInfo{nom, prenom, state, book_returned, joined_on});
       std::getline(stream, str1);
     }
 }
-void Members::insert(std::string nom, std::string prenom, MemberState state = MemberState::NORMAL, time_t joined_on = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())) //on défini la fonction membre qui permet d'insérer une nouvelle ligne dans la table
+void Members::insert(std::string nom, std::string prenom, MemberState state = MemberState::NORMAL, uint book_returned = 0, time_t joined_on = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())) //on défini la fonction membre qui permet d'insérer une nouvelle ligne dans la table
 {
   uint key; //on va générer aléatoirement la clé avec notre générateur generator
   do
   {
     key = generator();
   } while (table.find(key) != table.end() && table.begin() != table.end() ); // Si table.find(key) est égale à table.end (donc la fin de table) alors c'est que cette clé n'éxiste pas encore et on peut passer à la suite, sinon on recommence
-  table.emplace(key, MemberInfo{nom, prenom, state, joined_on});             // On insère notre nouvelle ligne
+  table.emplace(key, MemberInfo{nom, prenom, state, book_returned, joined_on});             // On insère notre nouvelle ligne
   save(); //On sauvegarde les changements apportés
 }
 void Members::delOne(uint id) //Définition de la fonction supprimant une ligne de la table Members
@@ -523,8 +531,22 @@ void Members::disp() const //Définition de la fonction AFFICHER
     std::cout << "nom: " << iter->second.nom << " / ";
     std::cout << "prenom: " << iter->second.prenom << " / ";
     std::cout << "etat: " << interpretMemberState(static_cast<std::underlying_type<MemberState>::type>(iter->second.state)) << " / ";
+    std::cout << "livres_empreintes: " << iter->second.book_returned << " / ";
     std::cout << "date_arrivee: " << std::put_time(std::localtime(&iter->second.joined_on), "%Y %m %d");
     std::cout << std::endl;
+  }
+}
+uint Members::ReturnedBooksByMember(uint member_id) //déclaration de la fonction me permetant de savoir combiens de livres le membre à déjà rapporté sans y avoir d'incident
+{
+  if(table.find(member_id) != table.end()) //on vérifie que le membre existe
+  {
+    std::unordered_map<uint, MemberInfo>::iterator member_iter = table.find(member_id);
+    return member_iter->second.book_returned;
+  }
+  else
+  {
+    //Erreur: le membre n'existe pas
+    return 0;
   }
 }
 
@@ -557,18 +579,41 @@ void Members::disp() const //Définition de la fonction AFFICHER
 
 /*system.cpp*/
 
-void System::borrow(Books &book_inst, uint book_id, uint member_id, uint days_of_borrowing = 30) //function permettant l'emprunt d'un livre
-{    
+void System::borrow(Books &book_inst, Members &member_inst, uint book_id, uint member_id, uint days_of_borrowing = 30) //function permettant l'emprunt d'un livre
+{
   if(book_inst.table.find(book_id) != book_inst.table.end())            //On s'assure que le livre demandé existe
   {
-    std::unordered_map<uint, BookInfo>::iterator book_table_iter = book_inst.table.find(book_id);
-    BookInfo &one_bookinfo = (&(*book_table_iter))->second;
+    std::unordered_map<uint, BookInfo>::iterator book_table_iter = book_inst.table.find(book_id); //on trouve l'itérateur de la ligne correspondant 
+    BookInfo &one_bookinfo = (&(*book_table_iter))->second;            //On obtient le BookInfo
     if(one_bookinfo.state == BookState::AVAILABLE)                     //On s'arrure que le livre demandé est disponible
     {
-      one_bookinfo.state = BookState::BORROWED;
-      one_bookinfo.id_borrower = member_id;
-      one_bookinfo.return_date = addDaysToDate(days_of_borrowing);
-      book_inst.save(); //On sauvegarde les changements apporté
+      if(member_inst.ReturnedBooksByMember(member_id) >= 20)    //Si le membre à déja empreinter plus de 20 livres sans accroc
+      {     //alors le membre peut empreinter jusqu'à 7 livre en même temps
+        if(book_inst.BorrowedBooksByMember(member_id) < 7)
+        {
+          one_bookinfo.state = BookState::BORROWED;                     //On déclare le livre comme empreinté
+          one_bookinfo.id_borrower = member_id;                         //On garde en mémoire le membre ayant empreinté le livre
+          one_bookinfo.return_date = addDaysToDate(days_of_borrowing);  //On définie la date limite où le membre devra rapporter le livre
+        }
+        else
+        {
+          //Erreur: le maximum de livres pouvant êtres empreintés par cet utilisateur à été atteind
+        }
+      }
+      else  //Si le membre n'à pas empreinter plus de 20 livres sans accroc
+      { //alors le membre ne peut empreinter que 2 livres
+        if(book_inst.BorrowedBooksByMember(member_id) < 2)
+        {
+          one_bookinfo.state = BookState::BORROWED; //On déclare le livre comme empreinté
+          one_bookinfo.id_borrower = member_id; //On garde en mémoire le membre ayant empreinté le livre
+          one_bookinfo.return_date = addDaysToDate(days_of_borrowing);  //On définie la date limite où le membre devra rapporter le livre
+        }
+        else
+        {
+        //Erreur: le maximum de livres pouvant êtres empreintés par cet utilisateur à été atteind
+        }
+      }
+      book_inst.save();//On sauvegarde les potentiels changements apporté
     }
     else
     {
@@ -606,34 +651,34 @@ void System::borrow(Books &book_inst, uint book_id, uint member_id, uint days_of
 
 
 /*main.cpp*/
-#include <iostream> // For debug purposes
+//#include <iostream> // For debug purposes
 
 
 int main(int, char**)
 {
-  /*On crée nos objets*/
+    /*On créé nos objets*/
     Members members;
     Books books;
     System lib_system;
 
-    /*On charge les dossier de sauvegarde*/
+    /*On charge les fichiers de sauvegarde*/
     books.load();
     members.load();
 
-    /*On insère dans nos table*/
-    //members.insert("PERINAZZO", "Lisa");
-    //books.insert("Le silences des agneaux",100.0);
+    /*On insère dans nos tables*/
+    //members.insert("PERINAZZO", "Christine");
+    //books.insert("L'homme bicentnaire",20.0);
     
-    /*On supprime une ligne de nos table se trouvant à l'id correspondant*/
-    //books.delOne(545404204);
+    /*On supprime une ligne de nos table se trouvant à l'id cible*/
+    //books.delOne(581869302);
     //members.delOne(581869302);
     
-    /*on sauvegarde nos tables*/
+    /*On sauvegarde nos tables*/
     //books.save();
     //members.save();
     
-    /*system*/
-    lib_system.borrow(books, 3890346734, 3499211612);
+    /*Opération system*/
+     lib_system.borrow(books, members, 3890346734, 3499211612);
 
     /*On affiche nos tables*/
     books.disp();
