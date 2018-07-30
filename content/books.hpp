@@ -7,7 +7,7 @@
 #include <chrono>
 #include <fstream>
 
-using uint = unsigned int; //on pourra utiliser uint pour représenter un unsigned int
+using uint = unsigned int; //On pourra utiliser uint pour représenter un unsigned int
 
 enum class BookState : int //état du livre (empreinté, perdu, en achat, dispo)
 {
@@ -16,7 +16,7 @@ enum class BookState : int //état du livre (empreinté, perdu, en achat, dispo)
   LOST,
   ORDERED
 };
-struct BookInfo // on stock toute les informations relatives à un livre
+struct BookInfo //On stock toute les informations relatives à un livre
 {
     std::string title;          //titre du livre
     float price;                //prix théorique du livre si il doit y avoir un remboursement
@@ -28,8 +28,8 @@ struct Books
 {
   protected:                                      //On crée notre générateur, il sera protégé, donc appelable seulement dans cette classe et les classe enfant
     std::mt19937 generator; 
-  public:                                         //On retourne au public, les éléments seront à nouveau appelables en dehors de l'instance de la classe
-    std::unordered_map<uint, BookInfo> table;     // table de tout les livres
+  public:                                              //On retourne au public, les éléments seront à nouveau appelables en dehors de l'instance de la classe
+    std::unordered_map<uint, BookInfo> table;          // table de tout les livres
     void save(std::string path = "save/books.txt");    //cette fonction sauvegarde la table dans un fichier externe
     void load(const std::string path = "save/books.txt", char delimiter = '/', char end_line = '\\'); //cette fonction charge la table depuis un fichier externe
     void insert(std::string title, float price, BookState state = BookState::AVAILABLE, uint id_borrower = 0, std::time_t return_date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()) );   //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
