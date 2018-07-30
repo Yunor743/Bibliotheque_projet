@@ -1,6 +1,5 @@
-/*classic_content.hpp*/
 
-//#pragma once
+#pragma once
 #include <iostream>
 #include <ctime>
 #include <iomanip>
