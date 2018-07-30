@@ -15,6 +15,12 @@ enum class BookState : int //état du livre (empreinté, perdu, en achat, dispo)
   LOST,
   ORDERED
 };
+constexpr std::array book_states = {
+  "AVAILABLE",
+  "BORROWED",
+  "LOST",
+  "ORDERED"
+};
 struct BookInfo // on stock toute les informations relatives à un livre
 {
     std::string title;          //titre du livre
@@ -26,7 +32,7 @@ struct BookInfo // on stock toute les informations relatives à un livre
 struct Books
 {
   protected:                                      //On crée notre générateur, il sera protégé, donc appelable seulement dans cette classe et les classe enfant
-    std::mt19937 generator; 
+    std::mt19937 generator;
   public:                                         //On retourne au public, les éléments seront à nouveau appelables en dehors de l'instance de la classe
     std::unordered_map<uint, BookInfo> table;     // table de tout les livres
     void save(std::string path);    //cette fonction sauvegarde la table dans un fichier externe

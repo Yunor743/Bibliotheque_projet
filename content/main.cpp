@@ -80,7 +80,7 @@ struct BookInfo // on stock toute les informations relatives à un livre
 struct Books
 {
   protected:                                      //On crée notre générateur, il sera protégé, donc appelable seulement dans cette classe et les classe enfant
-    std::mt19937 generator; 
+    std::mt19937 generator;
   public:                                         //On retourne au public, les éléments seront à nouveau appelables en dehors de l'instance de la classe
     std::unordered_map<uint, BookInfo> table;     // table de tout les livres
     void save(std::string path);    //cette fonction sauvegarde la table dans un fichier externe
@@ -217,93 +217,6 @@ struct System
   void returned(Books &book_inst, Members &member_inst, uint book_id); //Dans le cas ou le membre rapporte un livre ou viens payer sa taxe
   void check(Books &book_inst, Members &member_inst); //Cette fonction va s'itéré une fois par jour pour actualiser l'état de l'emprein de chaque membres
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*classic_content.cpp*/
-std::time_t addDaysToDate(uint nb_of_days, std::time_t start_date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()))
-{
-    std::tm tm = *std::localtime(&start_date);
-    tm.tm_mday += nb_of_days;
-    return std::mktime(&tm);
-}
-std::string interpretMemberState(bool state)
-{
-  if(state == 0)  
-  { 
-    return "BANNED";
-  }
-  else
-  {
-    return "NORMAL";
-  }
-}
-std::string interpretBookState(uint state)
-{
-  switch ( state )  
-  {
-      case 0:  
-        return "AVAILABLE";
-        break;
-      case 1:
-        return "BORROWED";
-        break;
-      case 2:
-        return "LOST";
-        break;
-      case 3:
-        return "ORDERED";
-        break;
-      default:
-        return "AVAILABLE";
-        break;
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -761,15 +674,15 @@ int main(int, char**)
     /*On insère dans nos tables*/
     //members.insert("PERINAZZO", "Christine");
     //books.insert("L'homme bicentnaire",20.0);
-    
+
     /*On supprime une ligne de nos table se trouvant à l'id cible*/
     //books.delOne(581869302);
     //members.delOne(581869302);
-    
+
     /*On sauvegarde nos tables*/
     //books.save();
     //members.save();
-    
+
     /*Opération system*/
     lib_system.borrow(books, members, 545404204, 3499211612, 90);
     //lib_system.return_book(books, members, 545404204);
