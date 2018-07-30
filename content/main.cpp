@@ -204,13 +204,18 @@ struct Members //contient une table de tous les membres ainsi que des fonctions 
 
 //#pragma once
 //#include <unordered_map>
+#include <cmath>
 
 //using uint = unsigned int;  //on poura utiliser uint pour représenter un unsigned int
 
 struct System
 {
-  void borrow(Books &book_inst, Members &member_inst, uint book_id, uint member_id, uint days_of_borrowing);  //Déclaration de la fonction permettant l'empreint d'un livre'
+  int ifReturnLate(Books &book_inst, uint book_id); //Cette fonction permettra de répondre à la condition: est ce que le livre à été rendu en retard ?
+  void borrow(Books &book_inst, Members &member_inst, uint book_id, uint member_id, uint days_of_borrowing);  //Déclaration de la fonction permettant l'empreint d'un livre
   void return_book(Books &book_inst, Members &member_inst, uint book_id); //Déclaration de la fonction permettant de déclaré un livre comme rapporté
+  void pay_taxe(Books &book_inst, Members &member_inst, uint book_id, float taxe_coef);  //Cette fonction permet de définir la taxe a payer en cas d'oublie de la part du membre
+  void returned(Books &book_inst, Members &member_inst, uint book_id); //Dans le cas ou le membre rapporte un livre ou viens payer sa taxe
+  void check(Books &book_inst, Members &member_inst); //Cette fonction va s'itéré une fois par jour pour actualiser l'état de l'emprein de chaque membres
 };
 
 
@@ -589,6 +594,11 @@ uint Members::ReturnedBooksByMember(uint member_id) //déclaration de la fonctio
 
 /*system.cpp*/
 
+int System::ifReturnLate(Books &book_inst, uint book_id)
+{
+  BookInfo &one_bookinfo = (&(*book_inst.table.find(book_id)))->second;            //On obtient le BookInfo
+  return static_cast<int>(std::round((difftime(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()), one_bookinfo.return_date) / 3600)/24));
+}
 void System::borrow(Books &book_inst, Members &member_inst, uint book_id, uint member_id, uint days_of_borrowing = 30) //function permettant l'emprunt d'un livre
 {
   if(book_inst.table.find(book_id) != book_inst.table.end())            //On s'assure que le livre demandé existe
@@ -636,8 +646,6 @@ void System::borrow(Books &book_inst, Members &member_inst, uint book_id, uint m
 }
 void System::return_book(Books &book_inst, Members &member_inst, uint book_id)  //Définition de la fonction permettant de déclaré un livre comme rapporté
 {
-  if(book_inst.table.find(book_id) != book_inst.table.end()) //on vérifie que le livre existe
-  {
     if(book_inst.table.find(book_id)->second.state == BookState::BORROWED)  //On vérifie que le livre à été empreinté
     {
       BookInfo &one_bookinfo = (&(*book_inst.table.find(book_id)))->second;            //On obtient le BookInfo
@@ -646,16 +654,54 @@ void System::return_book(Books &book_inst, Members &member_inst, uint book_id)  
       one_bookinfo.id_borrower = 0;
       one_bookinfo.return_date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
       one_bookinfo.state = BookState::AVAILABLE;
-      std::cout << "test" << std::endl;
     }
     else
     {
       //Erreur: Ce livre est soit perdu, disponible ou en commande mais il n'a pas été empreinté
     }
+}
+void System::pay_taxe(Books &book_inst, Members &member_inst, uint book_id, float taxe_coef = 0.5)
+{
+  BookInfo &one_bookinfo = (&(*book_inst.table.find(book_id)))->second;
+  MemberInfo &one_memberinfo = (&(*member_inst.table.find(one_bookinfo.id_borrower)))->second;
+  int days = ifReturnLate(book_inst, book_id);
+  std::cout << "taxe + livre: " << one_bookinfo.price + days * taxe_coef << std::endl;
+  std::cout << "taxe seulement: " << days * taxe_coef << std::endl;
+  std::cout << "Le membre est à présent considéré comme débité du montant dette" << std::endl;
+  std::cout << "le livre est déclaré comme perdu" << std::endl;
+  one_bookinfo.state = BookState::LOST;
+  one_memberinfo.book_returned = 0;
+}
+void System::returned(Books &book_inst, Members &member_inst, uint book_id)
+{
+  if(book_inst.table.find(book_id) != book_inst.table.end()) //on vérifie que le livre existe
+  {
+      if(ifReturnLate(book_inst, book_id) > 0) //Si le membre rapporte le livre en retard ou perdu
+      {
+        pay_taxe(book_inst, member_inst, book_id);
+      }
+      else    //Si le membre rapporte le livre dans les temps
+      {
+        return_book(book_inst, member_inst, book_id);
+      }
   }
   else
   {
-    //Erreur: le livre n'est pas dans le registe
+    //Erreur: le livre n'est pas dans le registre
+  }
+}
+void System::check(Books &book_inst, Members &member_inst)
+{
+  auto &iter_booktable = book_inst.table.begin();
+  while(iter_booktable != book_inst.table.end() )
+  {
+    if(ifReturnLate(book_inst, iter_booktable->first) > 60) //Si ça fait 60 jour que le livre aurait du etre ramené
+    {
+      std::unordered_map<uint, MemberInfo>::iterator &iter_membertable = member_inst.table.find(iter_booktable->second.id_borrower);
+      iter_booktable->second.state = BookState::LOST;
+      iter_membertable->second.state = MemberState::BANNED;
+    }
+    ++iter_booktable;
   }
 }
 
@@ -711,9 +757,11 @@ int main(int, char**)
     //members.save();
     
     /*Opération system*/
-    //lib_system.borrow(books, members, 545404204, 3499211612);
+    lib_system.borrow(books, members, 545404204, 3499211612, 90);
     //lib_system.return_book(books, members, 545404204);
-    
+    //lib_system.ifReturnLate(books, members, 3586334585);
+    lib_system.returned(books, members, 545404204);
+    //lib_system.check(books, members);
 
     /*On affiche nos tables*/
     books.disp();
