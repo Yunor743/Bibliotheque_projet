@@ -592,6 +592,12 @@ uint Members::ReturnedBooksByMember(uint member_id) //déclaration de la fonctio
 
 
 
+
+
+
+
+
+
 /*system.cpp*/
 
 int System::ifReturnLate(Books &book_inst, uint book_id)
@@ -704,6 +710,14 @@ void System::check(Books &book_inst, Members &member_inst)
     ++iter_booktable;
   }
 }
+
+
+
+
+
+
+
+
 
 
 
