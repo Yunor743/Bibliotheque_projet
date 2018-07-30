@@ -1,6 +1,6 @@
 #include "classic_content.hpp"
 
-std::time_t addDaysToDate(uint nb_of_days, std::time_t start_date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()))
+std::time_t addDaysToDate(uint nb_of_days, std::time_t start_date)
 {
     std::tm tm = *std::localtime(&start_date);
     tm.tm_mday += nb_of_days;

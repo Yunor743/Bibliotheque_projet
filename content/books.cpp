@@ -2,7 +2,7 @@
 #include "classic_content.hpp"
 #include "books.hpp"
 
-void Books::save(const std::string path = "save/books.txt") //On défini la fonction permetant de sauvegarder notre table de Books dans un fichier
+void Books::save(const std::string path) //On défini la fonction permetant de sauvegarder notre table de Books dans un fichier
 {
   std::ofstream save_books_file;    //On instancie le flux
   save_books_file.open (path);      //On ouvre le fichier au chemin spécifique
@@ -18,7 +18,7 @@ void Books::save(const std::string path = "save/books.txt") //On défini la fonc
   }
   save_books_file.close();    //On ferme le fichier
 }
-void Books::load(const std::string path = "save/books.txt", char delimiter = '/', char end_line = '\\')  //On défini la fonction permettant de charger la table de Books
+void Books::load(const std::string path, char delimiter, char end_line)  //On défini la fonction permettant de charger la table de Books
 {
     std::string str1, str2;
 
@@ -59,7 +59,7 @@ void Books::load(const std::string path = "save/books.txt", char delimiter = '/'
       std::getline(stream, str1);
     }
 }
-void Books::insert(std::string title, float price, BookState state = BookState::AVAILABLE, uint id_borrower=0, std::time_t return_date=std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()))
+void Books::insert(std::string title, float price, BookState state, uint id_borrower, std::time_t return_date)
 {
   uint key;  //on va générer aléatoirement la clé avec notre générateur generator
   do

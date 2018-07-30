@@ -3,7 +3,7 @@
 #include "members.hpp"
 
 
-void Members::save(std::string path = "save/members.txt") //On défini la fonction permetant de sauvegarder notre table de Members dans un fichier
+void Members::save(std::string path) //On défini la fonction permetant de sauvegarder notre table de Members dans un fichier
 {
   std::ofstream save_members_file;  //On instancie le flux
   save_members_file.open (path);    //On ouvre le fichier au chemin spécifique
@@ -19,7 +19,7 @@ void Members::save(std::string path = "save/members.txt") //On défini la foncti
   }
   save_members_file.close();   //On ferme le fichier
 }
-void Members::load(const std::string path = "save/members.txt", char delimiter = '/', char end_line = '\\')  //On défini la fonction permettant de charger la table de Members
+void Members::load(const std::string path, char delimiter, char end_line)  //On défini la fonction permettant de charger la table de Members
 {
     std::string str1, str2;
 
@@ -59,7 +59,7 @@ void Members::load(const std::string path = "save/members.txt", char delimiter =
       std::getline(stream, str1);
     }
 }
-void Members::insert(std::string nom, std::string prenom, MemberState state = MemberState::NORMAL, uint book_returned = 0, time_t joined_on = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())) //on défini la fonction membre qui permet d'insérer une nouvelle ligne dans la table
+void Members::insert(std::string nom, std::string prenom, MemberState state, uint book_returned, time_t joined_on) //on défini la fonction membre qui permet d'insérer une nouvelle ligne dans la table
 {
   uint key; //on va générer aléatoirement la clé avec notre générateur generator
   do
