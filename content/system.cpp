@@ -67,13 +67,13 @@ void System::return_book(Books &book_inst, Members &member_inst, uint book_id)  
       //Erreur: Ce livre est soit perdu, disponible ou en commande mais il n'a pas été empreinté
     }
 }
-void System::pay_tax(Books &book_inst, Members &member_inst, uint book_id, float taxe_coef)
+void System::pay_tax(Books &book_inst, Members &member_inst, uint book_id, float tax_coef)
 {
   BookInfo &one_bookinfo = (&(*book_inst.table.find(book_id)))->second;
   MemberInfo &one_memberinfo = (&(*member_inst.table.find(one_bookinfo.id_borrower)))->second;
   int days = ifReturnLate(book_inst, book_id);
-  std::cout << "taxe + livre: " << one_bookinfo.price + days * taxe_coef << std::endl;
-  std::cout << "taxe seulement: " << days * taxe_coef << std::endl;
+  std::cout << "taxe + livre: " << one_bookinfo.price + days * tax_coef << std::endl;
+  std::cout << "taxe seulement: " << days * tax_coef << std::endl;
   std::cout << "Le membre est à présent considéré comme débité du montant dette" << std::endl;
   std::cout << "le livre est déclaré comme perdu" << std::endl;
   one_bookinfo.state = BookState::LOST;
@@ -99,6 +99,7 @@ void System::returned(Books &book_inst, Members &member_inst, uint book_id)
 }
 void System::check(Books &book_inst, Members &member_inst)
 {
+  /*
   auto &iter_booktable = book_inst.table.begin();
   while(iter_booktable != book_inst.table.end() )
   {
@@ -110,4 +111,5 @@ void System::check(Books &book_inst, Members &member_inst)
     }
     ++iter_booktable;
   }
+  */
 }

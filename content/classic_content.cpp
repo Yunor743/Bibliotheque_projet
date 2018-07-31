@@ -13,6 +13,7 @@ std::string interpretMemberState(bool state)
   { 
     return "BANNED";
   }
+}
 std::string interpretBookState(uint state)
 {
   return book_states[state];

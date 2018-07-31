@@ -1,5 +1,5 @@
 %.o : %.cpp *.hpp
-	g++ -std=c++1z -c -o $@ $< -O3 -Wall -Wextra -Wpedantic
+	g++ -std=c++1z -c $@ $< -O3 -Wall -Wextra -Wpedantic
 
 all : *.o
-	g++ -o index.exe $^ -O3
+	g++ -std=c++1z -o index.exe $^ -O3

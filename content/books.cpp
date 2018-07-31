@@ -18,7 +18,7 @@ void Books::save(std::string path) //On défini la fonction permetant de sauvega
   }
   save_books_file.close();    //On ferme le fichier
 }
-void Books::load(const std::string path, char delimiter, char end_line)  //On défini la fonction permettant de charger la table de Books
+void Books::load(std::string path, char delimiter, char end_line)  //On défini la fonction permettant de charger la table de Books
 {
     std::string str1, str2;
 

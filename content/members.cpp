@@ -19,7 +19,7 @@ void Members::save(std::string path) //On défini la fonction permetant de sauve
   }
   save_members_file.close();   //On ferme le fichier
 }
-void Members::load(const std::string path, char delimiter, char end_line)  //On défini la fonction permettant de charger la table de Members
+void Members::load(std::string path, char delimiter, char end_line)  //On défini la fonction permettant de charger la table de Members
 {
     std::string str1, str2;
 
