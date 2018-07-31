@@ -43,3 +43,4 @@ struct Books
     void disp() const;    //fonction permettant l'affichage de la table
     uint BorrowedBooksByMember(uint member_id);
 };
+
