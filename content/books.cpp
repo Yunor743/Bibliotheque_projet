@@ -2,7 +2,7 @@
 #include "classic_content.hpp"
 #include "books.hpp"
 
-void Books::save(const std::string path) //On défini la fonction permetant de sauvegarder notre table de Books dans un fichier
+void Books::save(std::string path) //On défini la fonction permetant de sauvegarder notre table de Books dans un fichier
 {
   std::ofstream save_books_file;    //On instancie le flux
   save_books_file.open (path);      //On ouvre le fichier au chemin spécifique
