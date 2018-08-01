@@ -6,6 +6,7 @@
 #include <random>
 #include <chrono>
 #include <fstream>
+#include <array>
 
 using uint = unsigned int; //On pourra utiliser uint pour représenter un unsigned int
 
