@@ -17,7 +17,7 @@ enum class BookState : int //état du livre (empreinté, perdu, en achat, dispo)
   LOST,
   ORDERED
 };
-constexpr std::string book_states = {
+constexpr std::array<const char*, 4> book_states = {
   "AVAILABLE",
   "BORROWED",
   "LOST",
