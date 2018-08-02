@@ -7,7 +7,7 @@
 
 int main(int, char**)
 {
-    /*On créé nos objets*/
+    /*On crée nos objets*/
     Members members;
     Books books;
     System lib_system;
