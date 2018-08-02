@@ -2,3 +2,6 @@
 *.exe
 *.o
 *.pdb
+*~
+*.anjuta
+*.kdev4
