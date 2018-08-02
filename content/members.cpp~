@@ -1,5 +1,5 @@
+#include <exception>
 #include <iostream>
-#include <stdexcept>
 #include "classic_content.hpp"
 #include "members.hpp"
 
@@ -93,5 +93,5 @@ uint Members::ReturnedBooksByMember(uint member_id) //déclaration de la fonctio
   {
     return it->second.book_returned;
   } else
-	throw std::runtime_error("Members::ReturnedBooksByMember: Invalid member id");
+	throw std::exception("Members::ReturnedBooksByMember: Invalid member id");
 }

@@ -13,5 +13,5 @@ std::string interpretState(MemberState state)
 }
 std::string interpretState(BookState state)
 {
-  return book_states[static_cast<std::underlying_type_t<BookState>>(state)];
+  return book_states[static_cast<std::underlying_type<BookState>>(state)];
 }
