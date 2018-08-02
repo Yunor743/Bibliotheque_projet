@@ -1,10 +1,12 @@
-%.o : %.cpp *.hpp
-	g++ -c -o $@ $<
+all: irondelle
 
-all : *.o
-	g++ -o index.exe $^
+irondelle: *.o
+	g++ -o $@ $^
 
-	.PHONY clean
+%.o: %.cpp *.hpp
+	g++ -c $*.cpp
+
+.PHONY: clean
 
 clean:
 	rm -rf *.o
