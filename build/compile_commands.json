@@ -1,0 +1,27 @@
+[
+{
+  "directory": "E:/Bureau/Bibliotheque_projet/build",
+  "command": "H:\\Win-Builds\\mingw64\\bin\\g++.exe    -g   -o CMakeFiles\\irondelle.dir\\content\\books.cpp.obj -c E:\\Bureau\\Bibliotheque_projet\\content\\books.cpp",
+  "file": "E:/Bureau/Bibliotheque_projet/content/books.cpp"
+},
+{
+  "directory": "E:/Bureau/Bibliotheque_projet/build",
+  "command": "H:\\Win-Builds\\mingw64\\bin\\g++.exe    -g   -o CMakeFiles\\irondelle.dir\\content\\classic_content.cpp.obj -c E:\\Bureau\\Bibliotheque_projet\\content\\classic_content.cpp",
+  "file": "E:/Bureau/Bibliotheque_projet/content/classic_content.cpp"
+},
+{
+  "directory": "E:/Bureau/Bibliotheque_projet/build",
+  "command": "H:\\Win-Builds\\mingw64\\bin\\g++.exe    -g   -o CMakeFiles\\irondelle.dir\\content\\main.cpp.obj -c E:\\Bureau\\Bibliotheque_projet\\content\\main.cpp",
+  "file": "E:/Bureau/Bibliotheque_projet/content/main.cpp"
+},
+{
+  "directory": "E:/Bureau/Bibliotheque_projet/build",
+  "command": "H:\\Win-Builds\\mingw64\\bin\\g++.exe    -g   -o CMakeFiles\\irondelle.dir\\content\\members.cpp.obj -c E:\\Bureau\\Bibliotheque_projet\\content\\members.cpp",
+  "file": "E:/Bureau/Bibliotheque_projet/content/members.cpp"
+},
+{
+  "directory": "E:/Bureau/Bibliotheque_projet/build",
+  "command": "H:\\Win-Builds\\mingw64\\bin\\g++.exe    -g   -o CMakeFiles\\irondelle.dir\\content\\system.cpp.obj -c E:\\Bureau\\Bibliotheque_projet\\content\\system.cpp",
+  "file": "E:/Bureau/Bibliotheque_projet/content/system.cpp"
+}
+]
