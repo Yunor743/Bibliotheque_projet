@@ -5,4 +5,4 @@ file (GLOB SRC
     "content/*.cpp"
 )
 add_executable (irondelle ${SRC})
-file (INSTALL build/irondelle.exe DESTINATION ./)
+install (PROGRAMS build/irondelle.exe DESTINATION ./)
