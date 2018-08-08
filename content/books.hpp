@@ -41,7 +41,7 @@ public:                                                                         
   std::unordered_map<uint, BookInfo> table;                                                                // table de tout les livres
   void save(std::string path = "save/books.irdl");                                                          //cette fonction sauvegarde la table dans un fichier externe
   void load(std::string path = "save/books.irdl", char delimiter = '/', char end_line = '\\');              //cette fonction charge la table depuis un fichier externe
-  void insert(std::string title, float price, BookState state, uint id_borrower, std::time_t return_date); //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
+  void insert(std::string title, float price, BookState state = BookState::AVAILABLE, uint id_borrower = 0, std::time_t return_date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()) ); //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table
   void delOne(uint id);                                                                                    //fonction permettant de supprimer une ligne précise en fonction de l'id de la key
   void disp() const;                                                                                       //fonction permettant l'affichage de la table
   uint BorrowedBooksByMember(uint member_id);

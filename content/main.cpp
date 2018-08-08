@@ -17,12 +17,12 @@ int main(int, char**)
     members.load();
 
     /*On insère dans nos tables*/
-    //members.insert("PERINAZZO", "Christine");
-    //books.insert("L'homme bicentnaire",20.0);
+    //members.insert("PERINAZZO", "christian");
+    //books.insert("La vie est un long fleuve tranqile", 20.0);
 
     /*On supprime une ligne de nos table se trouvant à l'id cible*/
-    //books.delOne(581869302);
-    //members.delOne(581869302);
+    //books.delOne(4161255391);
+    //members.delOne(545404204);
 
     /*On sauvegarde nos tables*/
     //books.save();
