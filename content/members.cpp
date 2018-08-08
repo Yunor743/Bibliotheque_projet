@@ -21,17 +21,18 @@ void Members::save(std::string path) //On défini la fonction permetant de sauve
 }
 void Members::load(std::string path, char delimiter, char end_line)  //On définit la fonction permettant de charger la table de Members
 {
-    std::string str1, str2;
+  std::string str1, str2;
 
-    uint key, book_returned;
-    std::string nom, prenom;
-    MemberState state;
-    std::time_t joined_on;
+  uint key, book_returned;
+  std::string nom, prenom;
+  MemberState state;
+  std::time_t joined_on;
 
-    std::ifstream stream(path);
-
-    std::getline(stream, str1);
-    while (str1.find(end_line) != std::string::npos)
+  std::ifstream stream(path);
+  if(stream.is_open())        //we verify if the file can be open
+  {
+    std::getline(stream, str1);     //we get the stream
+    while (str1.find(end_line) != std::string::npos)   //we read the stream
     {
       str2 = str1.substr(str1.find(delimiter));
       key = stoul(str1.substr(0, str1.size() - str2.size()));
@@ -58,6 +59,11 @@ void Members::load(std::string path, char delimiter, char end_line)  //On défin
       table.emplace(key, MemberInfo{nom, prenom, state, book_returned, joined_on});
       std::getline(stream, str1);
     }
+  }
+  else  //error message if we cant open the file
+  {
+    std::cout << "Error: " << path << " can't be read" << std::endl;
+  }
 }
 void Members::insert(std::string nom, std::string prenom, MemberState state, uint book_returned, time_t joined_on) //on définit la fonction membre qui permet d'insérer une nouvelle ligne dans la table
 {

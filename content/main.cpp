@@ -29,10 +29,10 @@ int main(int, char**)
     //members.save();
 
     /*Opération system*/
-    lib_system.borrow(books, members, 545404204, 3499211612, 90);
+    //lib_system.borrow(books, members, 545404204, 3499211612, 90);
     //lib_system.return_book(books, members, 545404204);
     //lib_system.ifReturnLate(books, members, 3586334585);
-    lib_system.returned(books, members, 545404204);
+    //lib_system.returned(books, members, 545404204);
     //lib_system.check(books, members);
 
     /*On affiche nos tables*/

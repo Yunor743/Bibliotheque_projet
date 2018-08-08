@@ -5,6 +5,7 @@
 #include <ctime>
 #include <random>
 #include <chrono>
+#include <iostream>
 #include <fstream>
 
 using uint = unsigned int;  //on poura utiliser uint pour représenter un unsigned int

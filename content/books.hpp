@@ -5,6 +5,7 @@
 #include <ctime>
 #include <random>
 #include <chrono>
+#include <iostream>
 #include <fstream>
 #include <array>
 

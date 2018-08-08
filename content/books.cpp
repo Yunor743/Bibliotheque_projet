@@ -18,18 +18,20 @@ void Books::save(std::string path) //On définit la fonction permettant de sauve
 }
 void Books::load(std::string path, char delimiter, char end_line)  //On défini la fonction permettant de charger la table de Books
 {
-    std::string str1, str2;
+  std::string str1, str2;
 
-    uint key, id_borrower;
-    std::string title;
-    float price;
-    BookState state;
-    std::time_t return_date;
+  uint key, id_borrower;
+  std::string title;
+  float price;
+  BookState state;
+  std::time_t return_date;
 
-    std::ifstream stream(path);
+  std::ifstream stream(path);
 
-    std::getline(stream, str1);
-    while (str1.find(end_line) != std::string::npos)
+  if(stream.is_open())  //we verify if the file can be open
+  {
+    std::getline(stream, str1);     //we get the stream
+    while (str1.find(end_line) != std::string::npos)   //we read the stream
     {
       str2 = str1.substr(str1.find(delimiter));
       key = stoul(str1.substr(0, str1.size() - str2.size()));
@@ -56,6 +58,11 @@ void Books::load(std::string path, char delimiter, char end_line)  //On défini 
       table.emplace(key, BookInfo{title, price, state, id_borrower, return_date});
       std::getline(stream, str1);
     }
+  }
+  else  //error message if we cant open the file
+  {
+    std::cout << "Error: " << path << " can't be read" << std::endl;
+  }
 }
 void Books::insert(std::string title, float price, BookState state, uint id_borrower, std::time_t return_date)
 {
