@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/irondelle.dir/content/main.cpp.obj"
   "CMakeFiles/irondelle.dir/content/members.cpp.obj"
   "CMakeFiles/irondelle.dir/content/system.cpp.obj"
+  "CMakeFiles/irondelle.dir/ressources/icon.rc.obj"
   "irondelle.pdb"
   "irondelle.exe"
   "irondelle.exe.manifest"
@@ -11,6 +12,6 @@ file(REMOVE_RECURSE
 )
 
 # Per-language clean rules from dependency scanning.
-foreach(lang CXX)
+foreach(lang CXX RC)
   include(CMakeFiles/irondelle.dir/cmake_clean_${lang}.cmake OPTIONAL)
 endforeach()

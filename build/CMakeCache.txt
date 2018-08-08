@@ -138,7 +138,7 @@ CMAKE_OBJCOPY:FILEPATH=H:/Win-Builds/mingw64/bin/objcopy.exe
 CMAKE_OBJDUMP:FILEPATH=H:/Win-Builds/mingw64/bin/objdump.exe
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=irondelle
+CMAKE_PROJECT_NAME:STATIC=irondel
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=H:/Win-Builds/mingw64/bin/ranlib.exe
@@ -211,6 +211,12 @@ CMAKE_STRIP:FILEPATH=H:/Win-Builds/mingw64/bin/strip.exe
 // during the make.  This is useful for debugging only. With Visual
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=OFF
+
+//Value Computed by CMake
+irondel_BINARY_DIR:STATIC=E:/Bureau/Bibliotheque_projet/build
+
+//Value Computed by CMake
+irondel_SOURCE_DIR:STATIC=E:/Bureau/Bibliotheque_projet
 
 //Value Computed by CMake
 irondelle_BINARY_DIR:STATIC=E:/Bureau/Bibliotheque_projet/build

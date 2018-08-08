@@ -28,3 +28,5 @@ CMakeFiles/irondelle.dir/content/system.cpp.obj: ../content/members.hpp
 CMakeFiles/irondelle.dir/content/system.cpp.obj: ../content/system.cpp
 CMakeFiles/irondelle.dir/content/system.cpp.obj: ../content/system.hpp
 
+CMakeFiles/irondelle.dir/ressources/icon.rc.obj: ../ressources/icon.rc
+

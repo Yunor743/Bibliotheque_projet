@@ -156,17 +156,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named irondelle
+# Target rules for targets named irondel
 
 # Build rule for target.
-irondelle: cmake_check_build_system
-	$(MAKE) -f CMakeFiles\Makefile2 irondelle
-.PHONY : irondelle
+irondel: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 irondel
+.PHONY : irondel
 
 # fast build rule for target.
-irondelle/fast:
-	$(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/build
-.PHONY : irondelle/fast
+irondel/fast:
+	$(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/build
+.PHONY : irondel/fast
 
 content/books.obj: content/books.cpp.obj
 
@@ -174,7 +174,7 @@ content/books.obj: content/books.cpp.obj
 
 # target to build an object file
 content/books.cpp.obj:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/books.cpp.obj
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/books.cpp.obj
 .PHONY : content/books.cpp.obj
 
 content/books.i: content/books.cpp.i
@@ -183,7 +183,7 @@ content/books.i: content/books.cpp.i
 
 # target to preprocess a source file
 content/books.cpp.i:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/books.cpp.i
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/books.cpp.i
 .PHONY : content/books.cpp.i
 
 content/books.s: content/books.cpp.s
@@ -192,7 +192,7 @@ content/books.s: content/books.cpp.s
 
 # target to generate assembly for a file
 content/books.cpp.s:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/books.cpp.s
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/books.cpp.s
 .PHONY : content/books.cpp.s
 
 content/classic_content.obj: content/classic_content.cpp.obj
@@ -201,7 +201,7 @@ content/classic_content.obj: content/classic_content.cpp.obj
 
 # target to build an object file
 content/classic_content.cpp.obj:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/classic_content.cpp.obj
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/classic_content.cpp.obj
 .PHONY : content/classic_content.cpp.obj
 
 content/classic_content.i: content/classic_content.cpp.i
@@ -210,7 +210,7 @@ content/classic_content.i: content/classic_content.cpp.i
 
 # target to preprocess a source file
 content/classic_content.cpp.i:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/classic_content.cpp.i
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/classic_content.cpp.i
 .PHONY : content/classic_content.cpp.i
 
 content/classic_content.s: content/classic_content.cpp.s
@@ -219,7 +219,7 @@ content/classic_content.s: content/classic_content.cpp.s
 
 # target to generate assembly for a file
 content/classic_content.cpp.s:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/classic_content.cpp.s
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/classic_content.cpp.s
 .PHONY : content/classic_content.cpp.s
 
 content/main.obj: content/main.cpp.obj
@@ -228,7 +228,7 @@ content/main.obj: content/main.cpp.obj
 
 # target to build an object file
 content/main.cpp.obj:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/main.cpp.obj
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/main.cpp.obj
 .PHONY : content/main.cpp.obj
 
 content/main.i: content/main.cpp.i
@@ -237,7 +237,7 @@ content/main.i: content/main.cpp.i
 
 # target to preprocess a source file
 content/main.cpp.i:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/main.cpp.i
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/main.cpp.i
 .PHONY : content/main.cpp.i
 
 content/main.s: content/main.cpp.s
@@ -246,7 +246,7 @@ content/main.s: content/main.cpp.s
 
 # target to generate assembly for a file
 content/main.cpp.s:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/main.cpp.s
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/main.cpp.s
 .PHONY : content/main.cpp.s
 
 content/members.obj: content/members.cpp.obj
@@ -255,7 +255,7 @@ content/members.obj: content/members.cpp.obj
 
 # target to build an object file
 content/members.cpp.obj:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/members.cpp.obj
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/members.cpp.obj
 .PHONY : content/members.cpp.obj
 
 content/members.i: content/members.cpp.i
@@ -264,7 +264,7 @@ content/members.i: content/members.cpp.i
 
 # target to preprocess a source file
 content/members.cpp.i:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/members.cpp.i
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/members.cpp.i
 .PHONY : content/members.cpp.i
 
 content/members.s: content/members.cpp.s
@@ -273,7 +273,7 @@ content/members.s: content/members.cpp.s
 
 # target to generate assembly for a file
 content/members.cpp.s:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/members.cpp.s
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/members.cpp.s
 .PHONY : content/members.cpp.s
 
 content/system.obj: content/system.cpp.obj
@@ -282,7 +282,7 @@ content/system.obj: content/system.cpp.obj
 
 # target to build an object file
 content/system.cpp.obj:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/system.cpp.obj
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/system.cpp.obj
 .PHONY : content/system.cpp.obj
 
 content/system.i: content/system.cpp.i
@@ -291,7 +291,7 @@ content/system.i: content/system.cpp.i
 
 # target to preprocess a source file
 content/system.cpp.i:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/system.cpp.i
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/system.cpp.i
 .PHONY : content/system.cpp.i
 
 content/system.s: content/system.cpp.s
@@ -300,8 +300,17 @@ content/system.s: content/system.cpp.s
 
 # target to generate assembly for a file
 content/system.cpp.s:
-	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondelle.dir\build.make CMakeFiles/irondelle.dir/content/system.cpp.s
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/content/system.cpp.s
 .PHONY : content/system.cpp.s
+
+ressources/icon.obj: ressources/icon.rc.obj
+
+.PHONY : ressources/icon.obj
+
+# target to build an object file
+ressources/icon.rc.obj:
+	cd /d e:\bureau\bibliotheque_projet\build && $(MAKE) -f CMakeFiles\irondel.dir\build.make CMakeFiles/irondel.dir/ressources/icon.rc.obj
+.PHONY : ressources/icon.rc.obj
 
 # Help Target
 help:
@@ -309,7 +318,7 @@ help:
 	@echo ... all (the default if no target is provided)
 	@echo ... clean
 	@echo ... depend
-	@echo ... irondelle
+	@echo ... irondel
 	@echo ... install/local
 	@echo ... install
 	@echo ... edit_cache
@@ -331,6 +340,7 @@ help:
 	@echo ... content/system.obj
 	@echo ... content/system.i
 	@echo ... content/system.s
+	@echo ... ressources/icon.obj
 .PHONY : help
 
 
