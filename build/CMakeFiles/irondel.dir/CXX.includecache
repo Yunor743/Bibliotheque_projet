@@ -6,15 +6,15 @@
 
 #IncludeRegexTransform: 
 
-E:/Bureau/Bibliotheque_projet/content/books.cpp
+E:/Bureau/irondel_project/content/books.cpp
 iostream
 -
 classic_content.hpp
-E:/Bureau/Bibliotheque_projet/content/classic_content.hpp
+E:/Bureau/irondel_project/content/classic_content.hpp
 books.hpp
-E:/Bureau/Bibliotheque_projet/content/books.hpp
+E:/Bureau/irondel_project/content/books.hpp
 
-E:/Bureau/Bibliotheque_projet/content/books.hpp
+E:/Bureau/irondel_project/content/books.hpp
 unordered_map
 -
 string
@@ -32,13 +32,11 @@ fstream
 array
 -
 
-E:/Bureau/Bibliotheque_projet/content/classic_content.cpp
-books.hpp
-E:/Bureau/Bibliotheque_projet/content/books.hpp
+E:/Bureau/irondel_project/content/classic_content.cpp
 classic_content.hpp
-E:/Bureau/Bibliotheque_projet/content/classic_content.hpp
+E:/Bureau/irondel_project/content/classic_content.hpp
 
-E:/Bureau/Bibliotheque_projet/content/classic_content.hpp
+E:/Bureau/irondel_project/content/classic_content.hpp
 iostream
 -
 ctime
@@ -50,33 +48,33 @@ chrono
 string
 -
 books.hpp
-E:/Bureau/Bibliotheque_projet/content/books.hpp
+E:/Bureau/irondel_project/content/books.hpp
 members.hpp
-E:/Bureau/Bibliotheque_projet/content/members.hpp
+E:/Bureau/irondel_project/content/members.hpp
 
-E:/Bureau/Bibliotheque_projet/content/main.cpp
+E:/Bureau/irondel_project/content/main.cpp
 members.hpp
-E:/Bureau/Bibliotheque_projet/content/members.hpp
+E:/Bureau/irondel_project/content/members.hpp
 books.hpp
-E:/Bureau/Bibliotheque_projet/content/books.hpp
+E:/Bureau/irondel_project/content/books.hpp
 classic_content.hpp
-E:/Bureau/Bibliotheque_projet/content/classic_content.hpp
+E:/Bureau/irondel_project/content/classic_content.hpp
 system.hpp
-E:/Bureau/Bibliotheque_projet/content/system.hpp
+E:/Bureau/irondel_project/content/system.hpp
 iostream
 -
 
-E:/Bureau/Bibliotheque_projet/content/members.cpp
+E:/Bureau/irondel_project/content/members.cpp
 iostream
 -
 stdexcept
 -
 classic_content.hpp
-E:/Bureau/Bibliotheque_projet/content/classic_content.hpp
+E:/Bureau/irondel_project/content/classic_content.hpp
 members.hpp
-E:/Bureau/Bibliotheque_projet/content/members.hpp
+E:/Bureau/irondel_project/content/members.hpp
 
-E:/Bureau/Bibliotheque_projet/content/members.hpp
+E:/Bureau/irondel_project/content/members.hpp
 unordered_map
 -
 string
@@ -91,20 +89,24 @@ iostream
 -
 fstream
 -
+iterator
+-
+algorithm
+-
 
-E:/Bureau/Bibliotheque_projet/content/system.cpp
+E:/Bureau/irondel_project/content/system.cpp
 classic_content.hpp
-E:/Bureau/Bibliotheque_projet/content/classic_content.hpp
+E:/Bureau/irondel_project/content/classic_content.hpp
 system.hpp
-E:/Bureau/Bibliotheque_projet/content/system.hpp
+E:/Bureau/irondel_project/content/system.hpp
 
-E:/Bureau/Bibliotheque_projet/content/system.hpp
+E:/Bureau/irondel_project/content/system.hpp
 unordered_map
 -
 cmath
 -
 members.hpp
-E:/Bureau/Bibliotheque_projet/content/members.hpp
+E:/Bureau/irondel_project/content/members.hpp
 books.hpp
-E:/Bureau/Bibliotheque_projet/content/books.hpp
+E:/Bureau/irondel_project/content/books.hpp
 

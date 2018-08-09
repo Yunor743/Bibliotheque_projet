@@ -12,8 +12,10 @@ int main(int, char**)
     Books books;
     System lib_system;
 
+    members.saveSearch();
+
     /*On charge les fichiers de sauvegarde*/
-    books.load();
+    //books.load();
     members.load();
 
     /*On insère dans nos tables*/
@@ -26,7 +28,7 @@ int main(int, char**)
 
     /*On sauvegarde nos tables*/
     //books.save();
-    //members.save();
+    members.save();
 
     /*Opération system*/
     //lib_system.borrow(books, members, 545404204, 3499211612, 90);
@@ -36,8 +38,8 @@ int main(int, char**)
     //lib_system.check(books, members);
 
     /*On affiche nos tables*/
-    books.disp();
-    members.disp();
+    //books.disp();
+    //members.disp();
 
     std::cin.ignore();
     std::cin.get();

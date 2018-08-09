@@ -1,8 +1,8 @@
-# Install script for directory: E:/Bureau/Bibliotheque_projet
+# Install script for directory: E:/Bureau/irondel_project
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/irondelle")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/irondel")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,6 +33,6 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/." TYPE PROGRAM FILES "E:/Bureau/Bibliotheque_projet/build/irondel.exe")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/." TYPE PROGRAM FILES "E:/Bureau/irondel_project/build/irondel.exe")
 endif()
 

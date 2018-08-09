@@ -1,4 +1,3 @@
-#include "books.hpp"
 #include "classic_content.hpp"
 
 std::time_t addDaysToDate(uint nb_of_days, std::time_t start_date)

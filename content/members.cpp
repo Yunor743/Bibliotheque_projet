@@ -3,34 +3,62 @@
 #include "classic_content.hpp"
 #include "members.hpp"
 
-
-void Members::save(std::string path) //On défini la fonction permetant de sauvegarder notre table de Members dans un fichier
+void Members::saveSearch(std::string save_filename)
 {
-  std::ofstream save_members_file(path);  //On instancie le flux
-  for (auto [key, val] : table)  //On inscrit les valeurs de toute les iterations jusqu'à arriver à la dernière
+  std::string possibilities[2] = { //cette variable regroupe tout les potentiels chemins où trouver le fichier filename
+    "save/",
+    ""
+    };
+  std::string whole_path; //this var is use after to bind the path + filename
+  for (int i = 0; std::find(std::begin(possibilities), std::end(possibilities), possibilities[i]) != std::end(possibilities); i++)
   {
-    save_members_file << key << "/";
-    save_members_file << val.nom << "/";
-    save_members_file << val.prenom << "/";
-    save_members_file << static_cast<std::underlying_type<MemberState>::type>(val.state) << "/";
-    save_members_file << val.book_returned << "/";
-    save_members_file << val.joined_on << "\\";
-    save_members_file << std::endl;
+    whole_path = possibilities[i].append(save_filename);  //we bind the path with the file
+    std::ifstream stream(whole_path);   //we make an instance of the stream
+    if(stream.is_open())        //we verify if the file can be open
+    {
+      save_path = whole_path;
+      std::cout << "member_save found: " << save_path << std::endl;
+    }
   }
-  save_members_file.close();   //On ferme le fichier
-}
-void Members::load(std::string path, char delimiter, char end_line)  //On définit la fonction permettant de charger la table de Members
-{
-  std::string str1, str2;
-
-  uint key, book_returned;
-  std::string nom, prenom;
-  MemberState state;
-  std::time_t joined_on;
-
-  std::ifstream stream(path);
-  if(stream.is_open())        //we verify if the file can be open
+  if(save_path == "")
   {
+    std::cout << "ERROR: " << save_filename << " can't be found" << std::endl; //we don't change the save_path value if we didn't find its path 
+  }
+}
+void Members::save() //On défini la fonction permetant de sauvegarder notre table de Members dans un fichier
+{
+  if(save_path != "")
+  {
+    std::ofstream save_members_file(save_path);  //we make an instance of the stream
+    for (auto [key, val] : table)  //On inscrit les valeurs de toute les iterations jusqu'à arriver à la dernière
+    {
+      save_members_file << key << "/";
+      save_members_file << val.nom << "/";
+      save_members_file << val.prenom << "/";
+      save_members_file << static_cast<std::underlying_type<MemberState>::type>(val.state) << "/";
+      save_members_file << val.book_returned << "/";
+      save_members_file << val.joined_on << "\\";
+      save_members_file << std::endl;
+    }
+    save_members_file.close();   //On ferme le fichier
+  }
+  else
+  {
+    std::cout << "ERROR: members_savefile must be found to save it" << std::endl;
+  }
+}
+void Members::load(char delimiter, char end_line)  //On définit la fonction permettant de charger la table de Members
+{
+  if(save_path != "")
+  {
+    std::string str1, str2;
+
+    uint key, book_returned;
+    std::string nom, prenom;
+    MemberState state;
+    std::time_t joined_on;
+
+    std::ifstream stream(save_path);
     std::getline(stream, str1);     //we get the stream
     while (str1.find(end_line) != std::string::npos)   //we read the stream
     {
@@ -60,9 +88,9 @@ void Members::load(std::string path, char delimiter, char end_line)  //On défin
       std::getline(stream, str1);
     }
   }
-  else  //error message if we cant open the file
+  else
   {
-    std::cout << "Error: " << path << " can't be read" << std::endl;
+    std::cout << "ERROR: members_savefile must be found to load it" << std::endl;
   }
 }
 void Members::insert(std::string nom, std::string prenom, MemberState state, uint book_returned, time_t joined_on) //on définit la fonction membre qui permet d'insérer une nouvelle ligne dans la table
