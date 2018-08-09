@@ -13,8 +13,8 @@ int main(int, char**)
     System lib_system;
 
     /*le system cherche les fichiers de sauvegarde*/
-    lib_system.saveSearch("members.irdl", &members.save_path);
-    lib_system.saveSearch("books.irdl", &books.save_path);
+    lib_system.saveSearch("members.irdl", members.save_path);
+    lib_system.saveSearch("books.irdl", books.save_path);
 
     /*On charge les fichiers de sauvegarde*/
     books.load();
@@ -28,16 +28,16 @@ int main(int, char**)
     //books.delOne(4161255391);
     //members.delOne(545404204);
 
-    /*On sauvegarde nos tables*/
-    books.save();
-    members.save();
-
     /*Opération system*/
-    //lib_system.borrow(books, members, 545404204, 3499211612, 90);
-    //lib_system.return_book(books, members, 545404204);
+    //lib_system.borrow(books, members, 3890346734, 3499211612, 10);
+    //lib_system.return_book(books, members, 3890346734);
     //lib_system.ifReturnLate(books, members, 3586334585);
     //lib_system.returned(books, members, 545404204);
     //lib_system.check(books, members);
+
+    /*On sauvegarde nos tables*/
+    books.save();
+    members.save();
 
     /*On affiche nos tables*/
     books.disp();

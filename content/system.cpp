@@ -1,7 +1,7 @@
 #include "classic_content.hpp"
 #include "system.hpp"
 
-void System::saveSearch(std::string save_filename, std::string* save_path)
+void System::saveSearch(std::string save_filename, std::string &save_path)
 {
   std::string possibilities[2] = { //cette variable regroupe tout les potentiels chemins où trouver le fichier filename
     "save/",
@@ -14,19 +14,14 @@ void System::saveSearch(std::string save_filename, std::string* save_path)
     std::ifstream stream(whole_path);   //we make an instance of the stream
     if(stream.is_open())        //we verify if the file can be open
     {
-      *save_path = whole_path;
-      std::cout << save_filename << " found: " << *save_path << std::endl;
+      save_path = whole_path;
+      std::cout << save_filename << " found: " << save_path << std::endl;
     }
   }
-  if(*save_path == "")
+  if(save_path == "")
   {
     std::cout << "ERROR: " << save_filename << " can't be found" << std::endl; //we don't change the save_path value if we didn't find its path 
   }
-}
-int System::ifReturnLate(Books &book_inst, uint book_id)
-{
-  BookInfo &one_bookinfo = (&(*book_inst.table.find(book_id)))->second;            //On obtient le BookInfo
-  return static_cast<int>(std::round((difftime(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()), one_bookinfo.return_date) / 3600)/24));
 }
 void System::borrow(Books &book_inst, Members &member_inst, uint book_id, uint member_id, uint days_of_borrowing) //function permettant l'emprunt d'un livre
 {
@@ -73,21 +68,26 @@ void System::borrow(Books &book_inst, Members &member_inst, uint book_id, uint m
     //Erreur: le livre à empreinter n'éxiste pas
   }
 }
+int System::ifReturnLate(Books &book_inst, uint book_id)
+{
+  BookInfo &one_bookinfo = (&(*book_inst.table.find(book_id)))->second;            //On obtient le BookInfo
+  return static_cast<int>(std::round((difftime(std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()), one_bookinfo.return_date) / 3600)/24));
+}
 void System::return_book(Books &book_inst, Members &member_inst, uint book_id)  //Définition de la fonction permettant de déclaré un livre comme rapporté
 {
-    if(book_inst.table.find(book_id)->second.state == BookState::BORROWED)  //On vérifie que le livre à été empreinté
-    {
-      BookInfo &one_bookinfo = (&(*book_inst.table.find(book_id)))->second;            //On obtient le BookInfo
-      MemberInfo &one_memberinfo = (&(*member_inst.table.find(one_bookinfo.id_borrower)))->second;
-      ++one_memberinfo.book_returned;
-      one_bookinfo.id_borrower = 0;
-      one_bookinfo.return_date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-      one_bookinfo.state = BookState::AVAILABLE;
-    }
-    else
-    {
-      //Erreur: Ce livre est soit perdu, disponible ou en commande mais il n'a pas été empreinté
-    }
+  if(book_inst.table.find(book_id)->second.state == BookState::BORROWED)  //On vérifie que le livre à été empreinté
+  {
+    BookInfo &one_bookinfo = (&(*book_inst.table.find(book_id)))->second;            //On obtient le BookInfo
+    MemberInfo &one_memberinfo = (&(*member_inst.table.find(one_bookinfo.id_borrower)))->second;
+    ++one_memberinfo.book_returned;
+    one_bookinfo.id_borrower = 0;
+    one_bookinfo.return_date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    one_bookinfo.state = BookState::AVAILABLE;
+  }
+  else
+  {
+    //Erreur: Ce livre est soit perdu, disponible ou en commande mais il n'a pas été empreinté
+  }
 }
 void System::pay_tax(Books &book_inst, Members &member_inst, uint book_id, float tax_coef)
 {
