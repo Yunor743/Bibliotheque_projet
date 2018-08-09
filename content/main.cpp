@@ -12,7 +12,9 @@ int main(int, char**)
     Books books;
     System lib_system;
 
-    members.saveSearch();
+    /*le system cherche les fichiers de sauvegarde*/
+    lib_system.saveSearch("members.irdl", &members.save_path);
+    lib_system.saveSearch("books.irdl", &books.save_path);
 
     /*On charge les fichiers de sauvegarde*/
     //books.load();

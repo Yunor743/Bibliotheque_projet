@@ -32,7 +32,6 @@ protected: //On crée notre générateur, il sera protégé, donc appelable seul
 public:   //On retourne au public, les éléments seront à nouveau appelables en dehors de l'instance de la classe
   std::unordered_map<uint, MemberInfo> table;   //table de tout les membres
   std::string save_path = "";   //cette variable contient le chemin d'accès au fichier de sauvegarde de la table (il faut set cette variable grace a fileSearch())
-  void saveSearch(std::string save_filename = "members.irdl");    //cette fonction me permet de rechercher le fichier spécifique a différents chemins
   void save();    //cette fonction sauvegarde la table dans un fichier externe
   void load(char delimiter = '/', char end_line = '\\');    //cette fonction charge la table depuis un fichier externe
   void insert(std::string nom, std::string prenom, MemberState state = MemberState::NORMAL, uint book_returned = 0, time_t joined_on = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()));   //on déclare la fonction membre qui permet d'insérer une nouvelle entrée dans la table

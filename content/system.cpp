@@ -1,6 +1,28 @@
 #include "classic_content.hpp"
 #include "system.hpp"
 
+void System::saveSearch(std::string save_filename, std::string* save_path)
+{
+  std::string possibilities[2] = { //cette variable regroupe tout les potentiels chemins où trouver le fichier filename
+    "save/",
+    ""
+    };
+  std::string whole_path; //this var is use after to bind the path + filename
+  for (int i = 0; std::find(std::begin(possibilities), std::end(possibilities), possibilities[i]) != std::end(possibilities); i++)
+  {
+    whole_path = possibilities[i].append(save_filename);  //we bind the path with the file
+    std::ifstream stream(whole_path);   //we make an instance of the stream
+    if(stream.is_open())        //we verify if the file can be open
+    {
+      *save_path = whole_path;
+      std::cout << save_filename << " found: " << *save_path << std::endl;
+    }
+  }
+  if(*save_path == "")
+  {
+    std::cout << "ERROR: " << save_filename << " can't be found" << std::endl; //we don't change the save_path value if we didn't find its path 
+  }
+}
 int System::ifReturnLate(Books &book_inst, uint book_id)
 {
   BookInfo &one_bookinfo = (&(*book_inst.table.find(book_id)))->second;            //On obtient le BookInfo
