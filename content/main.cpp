@@ -17,7 +17,7 @@ int main(int, char**)
     lib_system.saveSearch("books.irdl", &books.save_path);
 
     /*On charge les fichiers de sauvegarde*/
-    //books.load();
+    books.load();
     members.load();
 
     /*On insère dans nos tables*/
@@ -29,7 +29,7 @@ int main(int, char**)
     //members.delOne(545404204);
 
     /*On sauvegarde nos tables*/
-    //books.save();
+    books.save();
     members.save();
 
     /*Opération system*/
@@ -40,8 +40,8 @@ int main(int, char**)
     //lib_system.check(books, members);
 
     /*On affiche nos tables*/
-    //books.disp();
-    //members.disp();
+    books.disp();
+    members.disp();
 
     std::cin.ignore();
     std::cin.get();

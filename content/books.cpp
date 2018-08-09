@@ -2,34 +2,40 @@
 #include "classic_content.hpp"
 #include "books.hpp"
 
-void Books::save(std::string path) //On définit la fonction permettant de sauvegarder notre table de Books dans un fichier
+void Books::save() //On définit la fonction permettant de sauvegarder notre table de Books dans un fichier
 {
-  std::ofstream save_books_file(path);    //On instancie le flux
-  for (auto [key, val] : table)    //On inscrit les valeurs de toute les iterations jusqu'à arriver à la dernière
+  if(save_path != "")
   {
-    save_books_file << key << "/";
-    save_books_file << val.title << "/";
-    save_books_file << val.price << "/";
-    save_books_file << static_cast<std::underlying_type<BookState>::type>(val.state) << "/";
-    save_books_file << val.id_borrower << "/";
-    save_books_file << val.return_date << "\\" << std::endl;
+    std::ofstream save_books_file(save_path);    //On instancie le flux
+    for (auto [key, val] : table)    //On inscrit les valeurs de toute les iterations jusqu'à arriver à la dernière
+    {
+      save_books_file << key << "/";
+      save_books_file << val.title << "/";
+      save_books_file << val.price << "/";
+      save_books_file << static_cast<std::underlying_type<BookState>::type>(val.state) << "/";
+      save_books_file << val.id_borrower << "/";
+      save_books_file << val.return_date << "\\" << std::endl;
+    }
+    save_books_file.close();    //On ferme le fichier
   }
-  save_books_file.close();    //On ferme le fichier
-}
-void Books::load(std::string path, char delimiter, char end_line)  //On défini la fonction permettant de charger la table de Books
-{
-  std::string str1, str2;
-
-  uint key, id_borrower;
-  std::string title;
-  float price;
-  BookState state;
-  std::time_t return_date;
-
-  std::ifstream stream(path);
-
-  if(stream.is_open())  //we verify if the file can be open
+  else
   {
+    std::cout << "ERROR: members_savefile must be found to save it" << std::endl;
+  }
+}
+void Books::load(char delimiter, char end_line)  //On défini la fonction permettant de charger la table de Books
+{
+  if(save_path != "")
+  {
+    std::string str1, str2;
+
+    uint key, id_borrower;
+    std::string title;
+    float price;
+    BookState state;
+    std::time_t return_date;
+
+    std::ifstream stream(save_path);
     std::getline(stream, str1);     //we get the stream
     while (str1.find(end_line) != std::string::npos)   //we read the stream
     {
@@ -59,9 +65,9 @@ void Books::load(std::string path, char delimiter, char end_line)  //On défini 
       std::getline(stream, str1);
     }
   }
-  else  //error message if we cant open the file
+  else
   {
-    std::cout << "Error: " << path << " can't be read" << std::endl;
+    std::cout << "ERROR: members_savefile must be found to load it" << std::endl;
   }
 }
 void Books::insert(std::string title, float price, BookState state, uint id_borrower, std::time_t return_date)
