@@ -14,7 +14,7 @@ void System::saveSearch(std::string save_filename, std::string &save_path)
     if(stream.is_open())        //we verify if the file can be open
     {
       save_path = whole_path;
-      std::cout << save_filename << " found: \n" << save_path << std::endl;
+      std::cout << save_filename << " found at: \n" << save_path << std::endl;
     }
   }
   if(save_path == "")
