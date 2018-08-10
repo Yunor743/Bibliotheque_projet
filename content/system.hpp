@@ -5,6 +5,7 @@
 #include <iostream>
 #include "members.hpp"
 #include "books.hpp"
+#include "classic_content.hpp"
 
 using uint = unsigned int;  //on poura utiliser uint pour représenter un unsigned int
 
@@ -18,5 +19,6 @@ public:
   void saveSearch(std::string save_filename, std::string &save_path);    //cette fonction me permet de rechercher le fichier spécifique a différents chemins
   void borrow(Books &book_inst, Members &member_inst, uint book_id, uint member_id, uint days_of_borrowing = 30);  //Déclaration de la fonction permettant l'empreint d'un livre
   void returned(Books &book_inst, Members &member_inst, uint book_id, bool is_booklost);    //Dans le cas ou le membre rapporte un livre ou viens payer sa taxe
+  void order(Books &book_inst, uint book_id, uint days_before_arrival);
   void check(Books &book_inst, Members &member_inst);   //Cette fonction va s'itéré une fois par jour pour actualiser l'état de l'emprein de chaque membres
 };

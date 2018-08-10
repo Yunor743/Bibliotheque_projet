@@ -95,8 +95,6 @@ algorithm
 -
 
 E:/Bureau/irondel_project/content/system.cpp
-classic_content.hpp
-E:/Bureau/irondel_project/content/classic_content.hpp
 system.hpp
 E:/Bureau/irondel_project/content/system.hpp
 
@@ -105,8 +103,12 @@ unordered_map
 -
 cmath
 -
+iostream
+-
 members.hpp
 E:/Bureau/irondel_project/content/members.hpp
 books.hpp
 E:/Bureau/irondel_project/content/books.hpp
+classic_content.hpp
+E:/Bureau/irondel_project/content/classic_content.hpp
 

@@ -22,7 +22,7 @@ void Members::save() //On défini la fonction permetant de sauvegarder notre tab
   }
   else
   {
-    std::cout << "ERROR: members_savefile must be found to save it" << std::endl;
+    std::cout << "ERROR: \n" << "members_savefile must be found to save it" << std::endl;
   }
 }
 void Members::load(char delimiter, char end_line)  //On définit la fonction permettant de charger la table de Members
@@ -68,7 +68,7 @@ void Members::load(char delimiter, char end_line)  //On définit la fonction per
   }
   else
   {
-    std::cout << "ERROR: members_savefile must be found to load it" << std::endl;
+    std::cout << "ERROR: \n" << "members_savefile must be found to load it" << std::endl;
   }
 }
 void Members::insert(std::string nom, std::string prenom, MemberState state, uint book_returned, time_t joined_on) //on définit la fonction membre qui permet d'insérer une nouvelle ligne dans la table
@@ -88,6 +88,7 @@ void Members::delOne(uint id) //Définition de la fonction supprimant une ligne 
 }
 void Members::disp() const //Définition de la fonction AFFICHER
 {
+  std::cout << " \n \n \n \n \n " << std::endl;
   for (auto [key, val] : table)  //On affiche les valeurs de toute les iterations jusqu'à arriver à la dernière
   {
     std::cout << "key: " << key << " / ";

@@ -1,4 +1,3 @@
-#include "classic_content.hpp"
 #include "system.hpp"
 
 void System::saveSearch(std::string save_filename, std::string &save_path)
@@ -15,7 +14,7 @@ void System::saveSearch(std::string save_filename, std::string &save_path)
     if(stream.is_open())        //we verify if the file can be open
     {
       save_path = whole_path;
-      std::cout << save_filename << " found: " << save_path << std::endl;
+      std::cout << save_filename << " found: \n" << save_path << std::endl;
     }
   }
   if(save_path == "")
@@ -40,7 +39,7 @@ void System::borrow(Books &book_inst, Members &member_inst, uint book_id, uint m
         }
         else
         {
-          //Erreur: le maximum de livres pouvant êtres empreintés par cet utilisateur à été atteind
+          std::cout << "ERROR: \n" << "this member has already reach the maximum of 7 books" << std::endl;
         }
       }
       else  //Si le membre n'à pas empreinter plus de 20 livres sans accroc
@@ -50,22 +49,23 @@ void System::borrow(Books &book_inst, Members &member_inst, uint book_id, uint m
           one_bookinfo.state = BookState::BORROWED; //On déclare le livre comme empreinté
           one_bookinfo.id_borrower = member_id; //On garde en mémoire le membre ayant empreinté le livre
           one_bookinfo.return_date = addDaysToDate(days_of_borrowing);  //On définie la date limite où le membre devra rapporter le livre
+          std::cout << "NOTE: \n" << "a member has borrow a book" << std::endl;
         }
         else
         {
-        //Erreur: le maximum de livres pouvant êtres empreintés par cet utilisateur à été atteind
+        std::cout << "ERROR: \n" << "this member has already reach the maximum of 2 books" << std::endl;
         }
       }
       book_inst.save();//On sauvegarde les potentiels changements apporté
     }
     else
     {
-      //Erreur: le livre n'est actuellement pas disponible
+      std::cout << "ERROR: \n" << "The target book isn't actually available" << std::endl;
     }
   }
   else
   {
-    //Erreur: le livre à empreinter n'éxiste pas
+    std::cout << "ERROR: \n" << "The target book isn't exist" << std::endl;
   }
 }
 int System::ifReturnLate(Books &book_inst, uint book_id)
@@ -75,19 +75,13 @@ int System::ifReturnLate(Books &book_inst, uint book_id)
 }
 void System::return_book(Books &book_inst, Members &member_inst, uint book_id)  //Définition de la fonction permettant de déclaré un livre comme rapporté
 {
-  if(book_inst.table.find(book_id)->second.state == BookState::BORROWED)  //On vérifie que le livre à été empreinté
-  {
     BookInfo &one_bookinfo = (&(*book_inst.table.find(book_id)))->second;            //On obtient le BookInfo
     MemberInfo &one_memberinfo = (&(*member_inst.table.find(one_bookinfo.id_borrower)))->second;
     ++one_memberinfo.book_returned;
     one_bookinfo.id_borrower = 0;
     one_bookinfo.return_date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
     one_bookinfo.state = BookState::AVAILABLE;
-  }
-  else
-  {
-    //Erreur: Ce livre est soit perdu, disponible ou en commande mais il n'a pas été empreinté
-  }
+    std::cout << "NOTE: \n" << "A book has been returned" << std::endl;
 }
 void System::pay_tax(Books &book_inst, Members &member_inst, uint book_id, bool is_booklost, float tax_coef)
 {
@@ -96,35 +90,57 @@ void System::pay_tax(Books &book_inst, Members &member_inst, uint book_id, bool 
   int days = ifReturnLate(book_inst, book_id);
   if(!is_booklost)
   {
-    std::cout << "taxe seulement: " << days * tax_coef << std::endl;
-    std::cout << "le livre est déclaré comme disponible a nouveau" << std::endl;
+    std::cout << "tax only: " << days * tax_coef << std::endl;
+    std::cout << "NOTE: \n" << "The book is declared available" << std::endl;
     one_bookinfo.state = BookState::AVAILABLE;
   }
   else
   {
-    std::cout << "tax + book: " << one_bookinfo.price + days * tax_coef << std::endl;
-    std::cout << "le livre est déclaré comme perdu" << std::endl;
+    std::cout << "tax & book price: " << one_bookinfo.price + days * tax_coef << std::endl;
+    std::cout << "NOTE: \n" << "The book is declared lost" << std::endl;
     one_bookinfo.state = BookState::LOST;
   }
-  std::cout << "Le membre est à présent considéré comme débité du montant dette" << std::endl;
+  std::cout << "NOTE: \n" << " We consider the member have paid his debt" << std::endl;
   one_memberinfo.book_returned = 0;
+
 }
 void System::returned(Books &book_inst, Members &member_inst, uint book_id, bool is_booklost)
 {
-  if(book_inst.table.find(book_id) != book_inst.table.end()) //on vérifie que le livre existe
+  if(book_inst.table.find(book_id) != book_inst.table.end())    //on vérifie que le livre existe
   {
-    if(ifReturnLate(book_inst, book_id) > 0) //Si le membre rapporte le livre en retard ou perdu
+    if(book_inst.table.find(book_id)->second.state == BookState::BORROWED)  //On vérifie que le livre à été empreinté
     {
-      pay_tax(book_inst, member_inst, book_id, is_booklost);
+      if(ifReturnLate(book_inst, book_id) > 0 || is_booklost)   //Si le membre rapporte le livre en retard ou perdu
+      {
+        pay_tax(book_inst, member_inst, book_id, is_booklost);
+      }
+      else    //Si le membre rapporte le livre dans les temps
+      {
+        return_book(book_inst, member_inst, book_id);
+      }
     }
-    else    //Si le membre rapporte le livre dans les temps
+    else
     {
-      return_book(book_inst, member_inst, book_id);
+      std::cout << "ERROR: \n" << "this book is lost, available or ordered but it is not borrowed" << std::endl;
     }
   }
   else
   {
-    //Erreur: le livre n'est pas dans le registre
+    std::cout << "ERROR: \n" << "The book isn't in the register" << std::endl;
+  }
+}
+void System::order(Books &book_inst, uint book_id, uint days_before_arrival)
+{
+  BookInfo &one_bookinfo = (&(*book_inst.table.find(book_id)))->second;
+  if(one_bookinfo.state == BookState::LOST)
+  {
+    one_bookinfo.state = BookState::ORDERED;
+    one_bookinfo.return_date = addDaysToDate(days_before_arrival);
+    std::cout << "NOTE: \n" << "The book have been ordered" << std::endl;
+  }
+  else
+  {
+    std::cout << "ERROR: \n" << "The target book is not lost" << std::endl;
   }
 }
 void System::check(Books &book_inst, Members &member_inst)

@@ -20,7 +20,7 @@ void Books::save() //On définit la fonction permettant de sauvegarder notre tab
   }
   else
   {
-    std::cout << "ERROR: books_savefile must be found to save it" << std::endl;
+    std::cout << "ERROR: \n" << "books_savefile must be found to save it" << std::endl;
   }
 }
 void Books::load(char delimiter, char end_line)  //On défini la fonction permettant de charger la table de Books
@@ -67,7 +67,7 @@ void Books::load(char delimiter, char end_line)  //On défini la fonction permet
   }
   else
   {
-    std::cout << "ERROR: books_savefile must be found to load it" << std::endl;
+    std::cout << "ERROR: \n" << "books_savefile must be found to load it" << std::endl;
   }
 }
 void Books::insert(std::string title, float price, BookState state, uint id_borrower, std::time_t return_date)
@@ -87,6 +87,7 @@ void Books::delOne(uint id) //Définition de la fonction supprimant une ligne de
 }
 void Books::disp() const  //Définition de la fonction AFFICHER
 {
+  std::cout << " \n \n \n \n \n " << std::endl;
   for (auto [key, val] : table)  //On affiche les valeurs de toute les iterations jusqu'à arriver à la dernière
   {
     std::cout << "key: " << key << " / ";

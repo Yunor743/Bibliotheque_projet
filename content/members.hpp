@@ -19,11 +19,11 @@ enum class MemberState : bool // état du membre (banni, neutre)
 };
 struct MemberInfo //on stocke toute les informations relatives à un membre
 {
-    std::string nom;       //Nom de famille
-    std::string prenom;    //Prénom
-    MemberState state;     //Etat du membre (banni, neutre)
-    uint book_returned;    //Nombre de livre que le membre à ramené à la suite sans avoir de retard ou pire
-    std::time_t joined_on; //Timestamp à laquelle le membre a été ajouté
+  std::string nom;       //Nom de famille
+  std::string prenom;    //Prénom
+  MemberState state;     //Etat du membre (banni, neutre)
+  uint book_returned;    //Nombre de livre que le membre à ramené à la suite sans avoir de retard ou pire
+  std::time_t joined_on; //Timestamp à laquelle le membre a été ajouté
 };
 struct Members //contient une table de tous les membres ainsi que des fonctions pour edit/lire celle-ci
 {
