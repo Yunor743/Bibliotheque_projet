@@ -26,11 +26,11 @@ constexpr std::array<const char*, 4> book_states = {
 };
 struct BookInfo // on stock toute les informations relatives à un livre
 {
-    std::string title;          //titre du livre
-    float price;                //prix théorique du livre si il doit y avoir un remboursement
-    BookState state;            //état du livre (empreinté, perdu, en achat, dispo)
-    uint id_borrower;           //id du membre qui à empreinté le livre
-    std::time_t return_date;    //Date où le livre doit être retourner à la bibliothèque
+  std::string title;          //titre du livre
+  float price;                //prix théorique du livre si il doit y avoir un remboursement
+  BookState state;            //état du livre (empreinté, perdu, en achat, dispo)
+  uint id_borrower;           //id du membre qui à empreinté le livre
+  std::time_t return_date;    //Date où le livre doit être retourner à la bibliothèque
 };
 struct Books
 {

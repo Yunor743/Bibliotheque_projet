@@ -30,8 +30,6 @@ int main(int, char**)
 
     /*Opération system*/
     //lib_system.borrow(books, members, 3890346734, 3499211612, 10);
-    //lib_system.return_book(books, members, 3890346734);
-    //lib_system.ifReturnLate(books, members, 3586334585);
     //lib_system.returned(books, members, 545404204);
     //lib_system.check(books, members);
 
