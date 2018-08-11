@@ -8,4 +8,4 @@ add_executable (
     irondel ${SRC}
     ${CMAKE_CURRENT_SOURCE_DIR}/ressources/icon.rc
 )
-file (INSTALL build/irondel.exe DESTINATION ./)
+install (PROGRAMS build/irondel.exe DESTINATION ./)
