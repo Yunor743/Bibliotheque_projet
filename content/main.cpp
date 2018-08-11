@@ -4,7 +4,7 @@
 #include "system.hpp"
 #include <iostream> // For debug purposes
 
-
+/*ceci est une msg test */
 int main(int, char**)
 {
     /*On crée nos objets*/
