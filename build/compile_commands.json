@@ -1,0 +1,27 @@
+[
+{
+  "directory": "E:/code/irondel_project/build",
+  "command": "C:\\Win-builds\\bin\\g++.exe    -g   -o CMakeFiles\\irondel.dir\\content\\books.cpp.obj -c E:\\code\\irondel_project\\content\\books.cpp",
+  "file": "E:/code/irondel_project/content/books.cpp"
+},
+{
+  "directory": "E:/code/irondel_project/build",
+  "command": "C:\\Win-builds\\bin\\g++.exe    -g   -o CMakeFiles\\irondel.dir\\content\\classic_content.cpp.obj -c E:\\code\\irondel_project\\content\\classic_content.cpp",
+  "file": "E:/code/irondel_project/content/classic_content.cpp"
+},
+{
+  "directory": "E:/code/irondel_project/build",
+  "command": "C:\\Win-builds\\bin\\g++.exe    -g   -o CMakeFiles\\irondel.dir\\content\\main.cpp.obj -c E:\\code\\irondel_project\\content\\main.cpp",
+  "file": "E:/code/irondel_project/content/main.cpp"
+},
+{
+  "directory": "E:/code/irondel_project/build",
+  "command": "C:\\Win-builds\\bin\\g++.exe    -g   -o CMakeFiles\\irondel.dir\\content\\members.cpp.obj -c E:\\code\\irondel_project\\content\\members.cpp",
+  "file": "E:/code/irondel_project/content/members.cpp"
+},
+{
+  "directory": "E:/code/irondel_project/build",
+  "command": "C:\\Win-builds\\bin\\g++.exe    -g   -o CMakeFiles\\irondel.dir\\content\\system.cpp.obj -c E:\\code\\irondel_project\\content\\system.cpp",
+  "file": "E:/code/irondel_project/content/system.cpp"
+}
+]
