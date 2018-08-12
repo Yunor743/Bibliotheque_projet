@@ -6,14 +6,6 @@
 
 #IncludeRegexTransform: 
 
-E:/code/irondel_project/content/books.cpp
-iostream
--
-classic_content.hpp
-E:/code/irondel_project/content/classic_content.hpp
-books.hpp
-E:/code/irondel_project/content/books.hpp
-
 E:/code/irondel_project/content/books.hpp
 unordered_map
 -
@@ -31,10 +23,6 @@ fstream
 -
 array
 -
-
-E:/code/irondel_project/content/classic_content.cpp
-classic_content.hpp
-E:/code/irondel_project/content/classic_content.hpp
 
 E:/code/irondel_project/content/classic_content.hpp
 iostream
@@ -64,16 +52,6 @@ E:/code/irondel_project/content/system.hpp
 iostream
 -
 
-E:/code/irondel_project/content/members.cpp
-iostream
--
-stdexcept
--
-classic_content.hpp
-E:/code/irondel_project/content/classic_content.hpp
-members.hpp
-E:/code/irondel_project/content/members.hpp
-
 E:/code/irondel_project/content/members.hpp
 unordered_map
 -
@@ -93,10 +71,6 @@ iterator
 -
 algorithm
 -
-
-E:/code/irondel_project/content/system.cpp
-system.hpp
-E:/code/irondel_project/content/system.hpp
 
 E:/code/irondel_project/content/system.hpp
 unordered_map
