@@ -33,10 +33,10 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = "C:\Program Files\CMake\bin\cmake.exe"
+CMAKE_COMMAND = E:\code\programmes\CMake\bin\cmake.exe
 
 # The command to remove a file.
-RM = "C:\Program Files\CMake\bin\cmake.exe" -E remove -f
+RM = E:\code\programmes\CMake\bin\cmake.exe -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -59,72 +59,72 @@ include CMakeFiles/irondel.dir/flags.make
 CMakeFiles/irondel.dir/content/books.cpp.obj: CMakeFiles/irondel.dir/flags.make
 CMakeFiles/irondel.dir/content/books.cpp.obj: ../content/books.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\code\irondel_project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/irondel.dir/content/books.cpp.obj"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\irondel.dir\content\books.cpp.obj -c E:\code\irondel_project\content\books.cpp
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\irondel.dir\content\books.cpp.obj -c E:\code\irondel_project\content\books.cpp
 
 CMakeFiles/irondel.dir/content/books.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/irondel.dir/content/books.cpp.i"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\code\irondel_project\content\books.cpp > CMakeFiles\irondel.dir\content\books.cpp.i
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\code\irondel_project\content\books.cpp > CMakeFiles\irondel.dir\content\books.cpp.i
 
 CMakeFiles/irondel.dir/content/books.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/irondel.dir/content/books.cpp.s"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\code\irondel_project\content\books.cpp -o CMakeFiles\irondel.dir\content\books.cpp.s
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\code\irondel_project\content\books.cpp -o CMakeFiles\irondel.dir\content\books.cpp.s
 
 CMakeFiles/irondel.dir/content/classic_content.cpp.obj: CMakeFiles/irondel.dir/flags.make
 CMakeFiles/irondel.dir/content/classic_content.cpp.obj: ../content/classic_content.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\code\irondel_project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/irondel.dir/content/classic_content.cpp.obj"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\irondel.dir\content\classic_content.cpp.obj -c E:\code\irondel_project\content\classic_content.cpp
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\irondel.dir\content\classic_content.cpp.obj -c E:\code\irondel_project\content\classic_content.cpp
 
 CMakeFiles/irondel.dir/content/classic_content.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/irondel.dir/content/classic_content.cpp.i"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\code\irondel_project\content\classic_content.cpp > CMakeFiles\irondel.dir\content\classic_content.cpp.i
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\code\irondel_project\content\classic_content.cpp > CMakeFiles\irondel.dir\content\classic_content.cpp.i
 
 CMakeFiles/irondel.dir/content/classic_content.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/irondel.dir/content/classic_content.cpp.s"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\code\irondel_project\content\classic_content.cpp -o CMakeFiles\irondel.dir\content\classic_content.cpp.s
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\code\irondel_project\content\classic_content.cpp -o CMakeFiles\irondel.dir\content\classic_content.cpp.s
 
 CMakeFiles/irondel.dir/content/main.cpp.obj: CMakeFiles/irondel.dir/flags.make
 CMakeFiles/irondel.dir/content/main.cpp.obj: ../content/main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\code\irondel_project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/irondel.dir/content/main.cpp.obj"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\irondel.dir\content\main.cpp.obj -c E:\code\irondel_project\content\main.cpp
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\irondel.dir\content\main.cpp.obj -c E:\code\irondel_project\content\main.cpp
 
 CMakeFiles/irondel.dir/content/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/irondel.dir/content/main.cpp.i"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\code\irondel_project\content\main.cpp > CMakeFiles\irondel.dir\content\main.cpp.i
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\code\irondel_project\content\main.cpp > CMakeFiles\irondel.dir\content\main.cpp.i
 
 CMakeFiles/irondel.dir/content/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/irondel.dir/content/main.cpp.s"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\code\irondel_project\content\main.cpp -o CMakeFiles\irondel.dir\content\main.cpp.s
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\code\irondel_project\content\main.cpp -o CMakeFiles\irondel.dir\content\main.cpp.s
 
 CMakeFiles/irondel.dir/content/members.cpp.obj: CMakeFiles/irondel.dir/flags.make
 CMakeFiles/irondel.dir/content/members.cpp.obj: ../content/members.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\code\irondel_project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/irondel.dir/content/members.cpp.obj"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\irondel.dir\content\members.cpp.obj -c E:\code\irondel_project\content\members.cpp
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\irondel.dir\content\members.cpp.obj -c E:\code\irondel_project\content\members.cpp
 
 CMakeFiles/irondel.dir/content/members.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/irondel.dir/content/members.cpp.i"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\code\irondel_project\content\members.cpp > CMakeFiles\irondel.dir\content\members.cpp.i
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\code\irondel_project\content\members.cpp > CMakeFiles\irondel.dir\content\members.cpp.i
 
 CMakeFiles/irondel.dir/content/members.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/irondel.dir/content/members.cpp.s"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\code\irondel_project\content\members.cpp -o CMakeFiles\irondel.dir\content\members.cpp.s
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\code\irondel_project\content\members.cpp -o CMakeFiles\irondel.dir\content\members.cpp.s
 
 CMakeFiles/irondel.dir/content/system.cpp.obj: CMakeFiles/irondel.dir/flags.make
 CMakeFiles/irondel.dir/content/system.cpp.obj: ../content/system.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\code\irondel_project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/irondel.dir/content/system.cpp.obj"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\irondel.dir\content\system.cpp.obj -c E:\code\irondel_project\content\system.cpp
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\irondel.dir\content\system.cpp.obj -c E:\code\irondel_project\content\system.cpp
 
 CMakeFiles/irondel.dir/content/system.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/irondel.dir/content/system.cpp.i"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\code\irondel_project\content\system.cpp > CMakeFiles\irondel.dir\content\system.cpp.i
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\code\irondel_project\content\system.cpp > CMakeFiles\irondel.dir\content\system.cpp.i
 
 CMakeFiles/irondel.dir/content/system.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/irondel.dir/content/system.cpp.s"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\code\irondel_project\content\system.cpp -o CMakeFiles\irondel.dir\content\system.cpp.s
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\code\irondel_project\content\system.cpp -o CMakeFiles\irondel.dir\content\system.cpp.s
 
 CMakeFiles/irondel.dir/ressources/icon.rc.obj: CMakeFiles/irondel.dir/flags.make
 CMakeFiles/irondel.dir/ressources/icon.rc.obj: ../ressources/icon.rc
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\code\irondel_project\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building RC object CMakeFiles/irondel.dir/ressources/icon.rc.obj"
-	cd /d E:\code\irondel_project\build && C:\Win-builds\bin\windres.exe -O coff $(RC_DEFINES) $(RC_INCLUDES) $(RC_FLAGS) E:\code\irondel_project\ressources\icon.rc CMakeFiles\irondel.dir\ressources\icon.rc.obj
+	cd /d E:\code\irondel_project\build && E:\code\programmes\mingw64\mingw64\bin\windres.exe -O coff $(RC_DEFINES) $(RC_INCLUDES) $(RC_FLAGS) E:\code\irondel_project\ressources\icon.rc CMakeFiles\irondel.dir\ressources\icon.rc.obj
 
 # Object files for target irondel
 irondel_OBJECTS = \
