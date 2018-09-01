@@ -1,3 +1,0 @@
-E:\code\programmes\CMake\bin\cmake.exe -E remove -f CMakeFiles\irondel.dir/objects.a
-E:\code\programmes\mingw64\mingw64\bin\ar.exe cr CMakeFiles\irondel.dir/objects.a @CMakeFiles\irondel.dir\objects1.rsp
-E:\code\programmes\mingw64\mingw64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\irondel.dir/objects.a -Wl,--no-whole-archive  -o irondel.exe -Wl,--out-implib,libirondel.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\irondel.dir\linklibs.rsp
